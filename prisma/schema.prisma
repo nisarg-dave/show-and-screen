@@ -12,3 +12,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  topFiveMovies  Movie[]  @relation("TopFiveMovies")
+  topFiveTvShows TvShow[] @relation("TopFiveTvShows")
+  watchedMovies  Movie[]  @relation("WatchedMovies")
+  watchedTvShows TvShow[] @relation("WatchedTvShows")
+  toWatchMovies  Movie[]  @relation("WantToWatchMovies")
+  toWatchTvShows TvShow[] @relation("WantToWatchTvShows")
+}
+
+model Movie {
+  id                String @id @default(uuid())
+  title             String
+  posterPath        String
+  topFive           User   @relation("TopFiveMovies", fields: [topFiveUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  topFiveUserId     String
+  watched           User   @relation("WatchedMovies", fields: [watchedUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  watchedUserId     String
+  wantToWatch       User   @relation("WantToWatchMovies", fields: [wantToWatchUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  wantToWatchUserId String
+}
+
+model TvShow {
+  id                String @id @default(uuid())
+  title             String
+  posterPath        String
+  topFive           User   @relation("TopFiveTvShows", fields: [topFiveUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  topFiveUserId     String
+  watched           User   @relation("WatchedTvShows", fields: [watchedUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  watchedUserId     String
+  wantToWatch       User   @relation("WantToWatchTvShows", fields: [wantToWatchUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  wantToWatchUserId String
+}
