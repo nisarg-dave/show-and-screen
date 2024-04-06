@@ -5,9 +5,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import MovieCard from "./MovieCard";
+import MovieCard from "./MediaCard";
 
-interface MovieCarouselProps {
+interface MediaCarouselProps {
   movies: {
     adult: boolean;
     backdrop_path: string;
@@ -27,17 +27,17 @@ interface MovieCarouselProps {
   }[];
 }
 
-function MovieCarousel({ movies }: MovieCarouselProps) {
+function MediaCarousel({ movies }: MediaCarouselProps) {
   return (
     <Carousel
       opts={{
         align: "start",
       }}
-      className="w-full"
+      className="w-full my-3"
     >
       <CarouselContent>
         {movies.map((movie) => (
-          <CarouselItem key={movie.id} className="md:basis-1/2 lg:basis-1/4">
+          <CarouselItem key={movie.id} className="md:basis-1/3 lg:basis-1/5">
             <MovieCard posterPath={movie.poster_path} />
           </CarouselItem>
         ))}
@@ -46,4 +46,4 @@ function MovieCarousel({ movies }: MovieCarouselProps) {
   );
 }
 
-export default MovieCarousel;
+export default MediaCarousel;
