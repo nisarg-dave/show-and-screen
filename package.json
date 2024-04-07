@@ -6,17 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma-build": "npm i && npx prisma generate"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.2",
+    "@as-integrations/next": "^3.0.0",
+    "@pothos/core": "^3.41.0",
+    "@pothos/plugin-prisma": "^3.65.0",
     "@prisma/client": "^5.11.0",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel-react": "^8.0.0",
+    "graphql": "^16.8.1",
     "lucide": "^0.363.0",
     "lucide-react": "^0.363.0",
     "next": "14.1.4",
