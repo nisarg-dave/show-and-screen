@@ -20,19 +20,6 @@ async function getTrendingTvShows() {
   return res.json();
 }
 
-async function getMadMax() {
-  const res = await fetch(
-    "https://api.themoviedb.org/3/search/movie?query=Mad Max: Fury Road",
-    {
-      next: { revalidate: 3600 },
-      headers: {
-        Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
-      },
-    }
-  );
-  return res.json();
-}
-
 export default async function Home() {
   const trendingMovies = await getTrendingMovies();
   const trendingTvShows = await getTrendingTvShows();

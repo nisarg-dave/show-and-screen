@@ -28,7 +28,7 @@ model User {
 model Movie {
   id                String @id @default(uuid())
   title             String
-  posterPath        String
+  imgUrl            String
   topFive           User   @relation("TopFiveMovies", fields: [topFiveUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   topFiveUserId     String
   watched           User   @relation("WatchedMovies", fields: [watchedUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
@@ -40,7 +40,7 @@ model Movie {
 model TvShow {
   id                String @id @default(uuid())
   title             String
-  posterPath        String
+  imgUrl            String
   topFive           User   @relation("TopFiveTvShows", fields: [topFiveUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
   topFiveUserId     String
   watched           User   @relation("WatchedTvShows", fields: [watchedUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
