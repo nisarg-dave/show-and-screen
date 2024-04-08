@@ -7,12 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma-build": "npm i && npx prisma generate"
+    "prisma-build": "npm i && npx prisma generate",
+    "codegen": "graphql-codegen"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.10",
+    "@apollo/experimental-nextjs-app-support": "^0.10.0",
     "@apollo/server": "^4.10.2",
     "@as-integrations/next": "^3.0.0",
     "@pothos/core": "^3.41.0",

@@ -5,7 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import MovieCard from "./MediaCard";
+import MovieCard from "./TmdbMediaCard";
 
 interface MediaCarouselProps {
   movies: {
@@ -27,7 +27,7 @@ interface MediaCarouselProps {
   }[];
 }
 
-function MediaCarousel({ movies }: any) {
+function TmdbMediaCarousel({ movies }: MediaCarouselProps) {
   return (
     <Carousel
       opts={{
@@ -38,7 +38,7 @@ function MediaCarousel({ movies }: any) {
       <CarouselContent>
         {movies.map((movie) => (
           <CarouselItem key={movie.id} className="md:basis-1/3 lg:basis-1/5">
-            <MovieCard imgUrl={movie.imgUrl} />
+            <MovieCard posterPath={movie.poster_path} />
           </CarouselItem>
         ))}
       </CarouselContent>
@@ -46,4 +46,4 @@ function MediaCarousel({ movies }: any) {
   );
 }
 
-export default MediaCarousel;
+export default TmdbMediaCarousel;

@@ -1,0 +1,37 @@
+query GetUsers {
+  users {
+    id
+    name
+    email
+    topFiveMovies {
+      id
+      title
+      imgUrl
+    }
+    topFiveTvShows {
+      id
+      title
+      imgUrl
+    }
+    watchedMovies {
+      id
+      title
+      imgUrl
+    }
+    watchedTvShows {
+      id
+      title
+      imgUrl
+    }
+    toWatchMovies {
+      id
+      title
+      imgUrl
+    }
+    toWatchTvShows {
+      id
+      title
+      imgUrl
+    }
+  }
+}

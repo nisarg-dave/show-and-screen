@@ -1,4 +1,7 @@
-import MovieCarousel from "@/components/media/MediaCarousel";
+import TmdbMediaCarousel from "@/components/media/TmdbMediaCarousel";
+import { GetUsersDocument } from "@/graphql/generated";
+import { getClient } from "@/app/_lib/ApolloClient";
+import MediaCarousel from "@/components/media/MediaCarousel";
 
 async function getTrendingMovies() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
@@ -23,6 +26,9 @@ async function getTrendingTvShows() {
 export default async function Home() {
   const trendingMovies = await getTrendingMovies();
   const trendingTvShows = await getTrendingTvShows();
+  const client = getClient();
+  const { data } = await client.query({ query: GetUsersDocument });
+  const currentUser = data.users[0];
 
   return (
     <main className="min-h-screen min-w-screen">
@@ -30,29 +36,35 @@ export default async function Home() {
         <h2 className="text-secondary font-semibold text-xl">
           My Top 5 Movies
         </h2>
+        <MediaCarousel movies={currentUser.topFiveMovies} />
         <h2 className="text-secondary font-semibold text-xl">
           My Top 5 TV Shows
         </h2>
+        <MediaCarousel movies={currentUser.topFiveTvShows} />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched Movies
         </h2>
+        <MediaCarousel movies={currentUser.watchedMovies} />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched TV Shows
         </h2>
+        <MediaCarousel movies={currentUser.watchedTvShows} />
         <h2 className="text-secondary font-semibold text-xl">
           Movies I Want To Watch
         </h2>
+        <MediaCarousel movies={currentUser.toWatchMovies} />
         <h2 className="text-secondary font-semibold text-xl">
           TV Shows I Want To Watch
         </h2>
+        <MediaCarousel movies={currentUser.toWatchTvShows} />
         <h2 className="text-secondary font-semibold text-xl">
           Trending Movies
         </h2>
-        <MovieCarousel movies={trendingMovies.results} />
+        <TmdbMediaCarousel movies={trendingMovies.results} />
         <h2 className="text-secondary font-semibold text-xl">
           Trending TV Shows
         </h2>
-        <MovieCarousel movies={trendingTvShows.results} />
+        <TmdbMediaCarousel movies={trendingTvShows.results} />
       </div>
     </main>
   );
