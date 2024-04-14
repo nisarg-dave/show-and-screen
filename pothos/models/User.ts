@@ -23,3 +23,31 @@ builder.queryFields((t) => ({
     },
   }),
 }));
+
+const FindUserInput = builder.inputType("FindUserInput", {
+  fields: (t) => ({
+    email: t.string({ required: true }),
+  }),
+});
+
+builder.queryFields((t) => ({
+  user: t.prismaField({
+    type: "User",
+    args: {
+      email: t.arg({
+        type: FindUserInput,
+        required: true,
+      }),
+    },
+    resolve: async (query, root, args, ctx, info) => {
+      const user = await prisma.user.findUnique({
+        ...query,
+        where: { email: args.email.email },
+      });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
+    },
+  }),
+}));

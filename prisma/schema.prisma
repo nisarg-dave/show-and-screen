@@ -18,37 +18,87 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(uuid())
+  id             String                   @id @default(uuid())
   name           String
-  email          String   @unique
-  topFiveMovies  Movie[]  @relation("TopFiveMovies")
-  topFiveTvShows TvShow[] @relation("TopFiveTvShows")
-  watchedMovies  Movie[]  @relation("WatchedMovies")
-  watchedTvShows TvShow[] @relation("WatchedTvShows")
-  toWatchMovies  Movie[]  @relation("WantToWatchMovies")
-  toWatchTvShows TvShow[] @relation("WantToWatchTvShows")
+  email          String                   @unique
+  topFiveMovies  UserTopFiveMovies[]
+  topFiveTvShows UserTopFiveTvShows[]
+  watchedMovies  UserWatchedMovies[]
+  watchedTvShows UserWatchedTvShows[]
+  toWatchMovies  UserWantToWatchMovies[]
+  toWatchTvShows UserWantToWatchTvShows[]
 }
 
 model Movie {
-  id                String @id @default(uuid())
-  title             String
-  imgUrl            String
-  topFive           User   @relation("TopFiveMovies", fields: [topFiveUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  topFiveUserId     String
-  watched           User   @relation("WatchedMovies", fields: [watchedUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  watchedUserId     String
-  wantToWatch       User   @relation("WantToWatchMovies", fields: [wantToWatchUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  wantToWatchUserId String
+  id           String                  @id @default(uuid())
+  title        String
+  posterPath   String
+  backdropPath String
+  topFive      UserTopFiveMovies[]
+  watched      UserWatchedMovies[]
+  wantToWatch  UserWantToWatchMovies[]
+}
+
+// Explicit many to many relationship using relation table (Creating relation tables is a common data modelling practice in SQL to represent relationships between different entities. In essence it means that "one m-n relation is modeled as two 1-n relations in the database")
+model UserTopFiveMovies {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  movieId String
+
+  @@id([userId, movieId])
+}
+
+model UserWatchedMovies {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  movieId String
+
+  @@id([userId, movieId])
+}
+
+model UserWantToWatchMovies {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  movieId String
+
+  @@id([userId, movieId])
 }
 
 model TvShow {
-  id                String @id @default(uuid())
-  title             String
-  imgUrl            String
-  topFive           User   @relation("TopFiveTvShows", fields: [topFiveUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  topFiveUserId     String
-  watched           User   @relation("WatchedTvShows", fields: [watchedUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  watchedUserId     String
-  wantToWatch       User   @relation("WantToWatchTvShows", fields: [wantToWatchUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
-  wantToWatchUserId String
+  id          String                   @id @default(uuid())
+  title       String
+  posterPath  String
+  topFive     UserTopFiveTvShows[]
+  watched     UserWatchedTvShows[]
+  wantToWatch UserWantToWatchTvShows[]
+}
+
+model UserTopFiveTvShows {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId   String
+  tvShow   TvShow @relation(fields: [tvShowId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  tvShowId String
+
+  @@id([userId, tvShowId])
+}
+
+model UserWatchedTvShows {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId   String
+  tvShow   TvShow @relation(fields: [tvShowId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  tvShowId String
+
+  @@id([userId, tvShowId])
+}
+
+model UserWantToWatchTvShows {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId   String
+  tvShow   TvShow @relation(fields: [tvShowId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  tvShowId String
+
+  @@id([userId, tvShowId])
 }

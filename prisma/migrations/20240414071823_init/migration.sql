@@ -11,7 +11,8 @@ CREATE TABLE "User" (
 CREATE TABLE "Movie" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "imgUrl" TEXT NOT NULL,
+    "posterPath" TEXT NOT NULL,
+    "backdropPath" TEXT NOT NULL,
     "topFiveUserId" TEXT NOT NULL,
     "watchedUserId" TEXT NOT NULL,
     "wantToWatchUserId" TEXT NOT NULL,
@@ -23,7 +24,8 @@ CREATE TABLE "Movie" (
 CREATE TABLE "TvShow" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "imgUrl" TEXT NOT NULL,
+    "posterPath" TEXT NOT NULL,
+    "backdropPath" TEXT NOT NULL,
     "topFiveUserId" TEXT NOT NULL,
     "watchedUserId" TEXT NOT NULL,
     "wantToWatchUserId" TEXT NOT NULL,
