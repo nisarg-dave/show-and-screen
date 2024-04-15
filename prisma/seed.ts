@@ -92,200 +92,255 @@ async function main() {
         backdropPath:
           "https://image.tmdb.org/t/p/original/iTyh3hqTUjiRqQo8Uz1w1KtQti9.jpg",
       },
+      {
+        title: "A Quiet Place Part II",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/4q2hz2m8hubgvijz8Ez0T2Os2Yv.jpg",
+        backdropPath:
+          "https://image.tmdb.org/t/p/original/AsqUSUqXrK8JfH8WEQnCXVbIAv6.jpg",
+      },
+      {
+        title: "Furiosa: A Mad Max Saga",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/iADOJ8Zymht2JPMoy3R7xceZprc.jpg",
+        backdropPath:
+          "https://image.tmdb.org/t/p/original/q8IEFmEGGSGmAWfwRs23XDwdFN4.jpg",
+      },
+      {
+        title: "A Quiet Place: Day One",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/2DR8Wi785gwqCspLFVVr7G3sERx.jpg",
+        backdropPath:
+          "https://image.tmdb.org/t/p/original/1XyIHrP7X7rn3UBkNy9hPb9vCUf.jpg",
+      },
+      {
+        title: "Road House",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/bXi6IQiQDHD00JFio5ZSZOeRSBh.jpg",
+        backdropPath:
+          "https://image.tmdb.org/t/p/original/oe7mWkvYhK4PLRNAVSvonzyUXNy.jpg",
+      },
+      {
+        title: "Air",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/76AKQPdH3M8cvsFR9K8JsOzVlY5.jpg",
+        backdropPath:
+          "https://image.tmdb.org/t/p/original/aT3sRVqgpkyCo23fp9myVfKPWbA.jpg",
+      },
     ],
   });
 
-  // await prisma.user.update({
-  //   where: { email: "ndave630@gmail.com" },
-  //   data: {
-  //     topFiveTvShows: {
-  //       create: [
-  //         {
-  //           title: "You",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/7bEYwjUvlJW7GerM8GYmqwl4oS3.jpg",
-  //           watchedUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "The Crown",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/1M876KPjulVwppEpldhdc8V4o68.jpg",
-  //           watchedUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Cobra Kai",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/m7tG5E1EbywuwTsl6hq990So0Bx.jpg",
-  //           watchedUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "The Mandalorian",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/eU1i6eHXlzMOlEq0ku1Rzq7Y4wA.jpg",
-  //           watchedUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Daredevil",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/QWbPaDxiB6LW2LjASknzYBvjMj.jpg",
-  //           watchedUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //       ],
-  //     },
-  //     watchedMovies: {
+  await prisma.tvShow.createMany({
+    data: [
+      {
+        title: "You",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/7bEYwjUvlJW7GerM8GYmqwl4oS3.jpg",
+      },
+      {
+        title: "The Crown",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/1M876KPjulVwppEpldhdc8V4o68.jpg",
+      },
+      {
+        title: "Cobra Kai",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/m7tG5E1EbywuwTsl6hq990So0Bx.jpg",
+      },
+      {
+        title: "The Mandalorian",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/eU1i6eHXlzMOlEq0ku1Rzq7Y4wA.jpg",
+      },
+      {
+        title: "Daredevil",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/QWbPaDxiB6LW2LjASknzYBvjMj.jpg",
+      },
+      {
+        title: "The Book of Boba Fett",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/gNbdjDi1HamTCrfvM9JeA94bNi2.jpg",
+      },
+      {
+        title: "Ahsoka",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/laCJxobHoPVaLQTKxc14Y2zV64J.jpg",
+      },
+      {
+        title: "Jessica Jones",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/lwPFyjxAZY6NqHxywgY00Y4MFBx.jpg",
+      },
+      {
+        title: "Jack Ryan",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/cO4py3L3q5GNPrA0qr1wVDrosK1.jpg",
+      },
+      {
+        title: "True Detective",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/cuV2O5ZyDLHSOWzg3nLVljp1ubw.jpg",
+      },
+      {
+        title: "Masters of the Air",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/rSAmgcoA74371rplbqM27yVsd3y.jpg",
+      },
+      {
+        title: "Halo",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/hmHA5jqxN3ESIAGx0jAwV7TJhTQ.jpg",
+      },
+      {
+        title: "Avatar: The Last Airbender",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/lzZpWEaqzP0qVA5nkCc5ASbNcSy.jpg",
+      },
+      {
+        title: "House of the Dragon",
+        posterPath:
+          "https://image.tmdb.org/t/p/original/1X4h40fcB4WWUmIBK0auT4zRBAV.jpg",
+      },
+    ],
+  });
 
-  //     watchedTvShows: {
-  //       create: [
-  //         {
-  //           title: "You",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/7bEYwjUvlJW7GerM8GYmqwl4oS3.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "The Crown",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/1M876KPjulVwppEpldhdc8V4o68.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Cobra Kai",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/m7tG5E1EbywuwTsl6hq990So0Bx.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "The Mandalorian",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/eU1i6eHXlzMOlEq0ku1Rzq7Y4wA.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "The Book of Boba Fett",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/gNbdjDi1HamTCrfvM9JeA94bNi2.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Ahsoka",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/laCJxobHoPVaLQTKxc14Y2zV64J.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Daredevil",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/QWbPaDxiB6LW2LjASknzYBvjMj.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Jessica Jones",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/lwPFyjxAZY6NqHxywgY00Y4MFBx.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Jessica Jones",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/cO4py3L3q5GNPrA0qr1wVDrosK1.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           wantToWatchUserId: createdUser.id,
-  //         },
-  //       ],
-  //     },
-  //     toWatchMovies: {
-  //       create: [
-  //         {
-  //           title: "A Quiet Place Part II",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/4q2hz2m8hubgvijz8Ez0T2Os2Yv.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Furiosa: A Mad Max Saga",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/iADOJ8Zymht2JPMoy3R7xceZprc.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "A Quiet Place: Day One",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/2DR8Wi785gwqCspLFVVr7G3sERx.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Road House",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/bXi6IQiQDHD00JFio5ZSZOeRSBh.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Air",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/76AKQPdH3M8cvsFR9K8JsOzVlY5.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //       ],
-  //     },
-  //     toWatchTvShows: {
-  //       create: [
-  //         {
-  //           title: "True Detective",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/cuV2O5ZyDLHSOWzg3nLVljp1ubw.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Masters of the Air",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/rSAmgcoA74371rplbqM27yVsd3y.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Halo",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/hmHA5jqxN3ESIAGx0jAwV7TJhTQ.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "Avatar: The Last Airbender",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/lzZpWEaqzP0qVA5nkCc5ASbNcSy.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //         {
-  //           title: "House of the Dragon",
-  //           imgUrl:
-  //             "https://image.tmdb.org/t/p/original/1X4h40fcB4WWUmIBK0auT4zRBAV.jpg",
-  //           topFiveUserId: createdUser.id,
-  //           watchedUserId: createdUser.id,
-  //         },
-  //       ],
-  //     },
-  //   },
-  // });
+  const topFiveMoviesArr = await prisma.movie.findMany({
+    where: {
+      OR: [
+        { title: "Mad Max: Fury Road" },
+        { title: "Top Gun: Maverick" },
+        { title: "The Shawshank Redemption" },
+        { title: "NightCrawler" },
+        { title: "Enemy" },
+      ],
+    },
+  });
+
+  const topFiveTvShowsArr = await prisma.tvShow.findMany({
+    where: {
+      OR: [
+        { title: "You" },
+        { title: "The Crown" },
+        { title: "Cobra Kai" },
+        { title: "The Mandalorian" },
+        { title: "Daredevil" },
+      ],
+    },
+  });
+
+  const watchedMoviesArr = await prisma.movie.findMany({
+    where: {
+      OR: [
+        { title: "Mad Max: Fury Road" },
+        { title: "Top Gun: Maverick" },
+        { title: "The Shawshank Redemption" },
+        { title: "NightCrawler" },
+        { title: "Enemy" },
+        { title: "The Batman" },
+        { title: "Dune: Part Two" },
+        { title: "Fight Club" },
+        { title: "Dune" },
+        { title: "Mission Impossible - Dead Reckoning Part One" },
+        { title: "Arrival" },
+      ],
+    },
+  });
+
+  const watchedTvShowsArr = await prisma.tvShow.findMany({
+    where: {
+      OR: [
+        { title: "You" },
+        { title: "The Crown" },
+        { title: "Cobra Kai" },
+        { title: "The Mandalorian" },
+        { title: "Daredevil" },
+        { title: "The Book of Boba Fett" },
+        { title: "Ahsoka" },
+        { title: "Jessica Jones" },
+        { title: "Jack Ryan" },
+      ],
+    },
+  });
+
+  const toWatchMoviesArr = await prisma.movie.findMany({
+    where: {
+      OR: [
+        { title: "A Quiet Place Part II" },
+        { title: "Furiosa: A Mad Max Saga" },
+        { title: "A Quiet Place: Day One" },
+        { title: "Road House" },
+        { title: "Air" },
+      ],
+    },
+  });
+
+  const toWatchTvShowsArr = await prisma.tvShow.findMany({
+    where: {
+      OR: [
+        { title: "True Detective" },
+        { title: "Masters of the Air" },
+        { title: "Halo" },
+        { title: "Avatar: The Last Airbender" },
+        { title: "House of the Dragon" },
+      ],
+    },
+  });
+
+  await prisma.user.update({
+    where: { email: "ndave630@gmail.com" },
+    data: {
+      topFiveMovies: {
+        connect: topFiveMoviesArr.map((movie) => ({
+          // Placing them inside the composite key
+          userId_movieId: {
+            userId: createdUser.id,
+            movieId: movie.id,
+          },
+        })),
+      },
+      topFiveTvShows: {
+        connect: topFiveTvShowsArr.map((tvShow) => ({
+          userId_tvShowId: {
+            userId: createdUser.id,
+            tvShowId: tvShow.id,
+          },
+        })),
+      },
+      watchedMovies: {
+        connect: watchedMoviesArr.map((watchedMovie) => ({
+          userId_movieId: {
+            userId: createdUser.id,
+            movieId: watchedMovie.id,
+          },
+        })),
+      },
+      watchedTvShows: {
+        connect: watchedTvShowsArr.map((watchedTvShow) => ({
+          userId_tvShowId: {
+            userId: createdUser.id,
+            tvShowId: watchedTvShow.id,
+          },
+        })),
+      },
+      toWatchMovies: {
+        connect: toWatchMoviesArr.map((toWatchMovie) => ({
+          userId_movieId: {
+            userId: createdUser.id,
+            movieId: toWatchMovie.id,
+          },
+        })),
+      },
+      toWatchTvShows: {
+        connect: toWatchTvShowsArr.map((toWatchTvShow) => ({
+          userId_tvShowId: {
+            userId: createdUser.id,
+            tvShowId: toWatchTvShow.id,
+          },
+        })),
+      },
+    },
+  });
 }
 
 main()
