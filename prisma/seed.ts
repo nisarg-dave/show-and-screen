@@ -79,7 +79,7 @@ async function main() {
           "https://image.tmdb.org/t/p/original/lzWHmYdfeFiMIY4JaMmtR7GEli3.jpg",
       },
       {
-        title: "Mission: Impossible - Dead Reckoning Part One",
+        title: "Mission Impossible - Dead Reckoning Part One",
         posterPath:
           "https://image.tmdb.org/t/p/original/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
         backdropPath:
@@ -291,50 +291,81 @@ async function main() {
     where: { email: "ndave630@gmail.com" },
     data: {
       topFiveMovies: {
-        connect: topFiveMoviesArr.map((movie) => ({
-          // Placing them inside the composite key
-          userId_movieId: {
-            userId: createdUser.id,
+        connectOrCreate: topFiveMoviesArr.map((movie) => ({
+          where: {
+            // Placing them inside the composite key
+            userId_movieId: {
+              userId: createdUser.id,
+              movieId: movie.id,
+            },
+          },
+          create: {
             movieId: movie.id,
           },
         })),
       },
       topFiveTvShows: {
-        connect: topFiveTvShowsArr.map((tvShow) => ({
-          userId_tvShowId: {
-            userId: createdUser.id,
+        connectOrCreate: topFiveTvShowsArr.map((tvShow) => ({
+          where: {
+            userId_tvShowId: {
+              userId: createdUser.id,
+              tvShowId: tvShow.id,
+            },
+          },
+          create: {
             tvShowId: tvShow.id,
           },
         })),
       },
       watchedMovies: {
-        connect: watchedMoviesArr.map((watchedMovie) => ({
-          userId_movieId: {
-            userId: createdUser.id,
+        connectOrCreate: watchedMoviesArr.map((watchedMovie) => ({
+          where: {
+            userId_movieId: {
+              userId: createdUser.id,
+              movieId: watchedMovie.id,
+            },
+          },
+          create: {
             movieId: watchedMovie.id,
           },
         })),
       },
       watchedTvShows: {
-        connect: watchedTvShowsArr.map((watchedTvShow) => ({
-          userId_tvShowId: {
-            userId: createdUser.id,
+        connectOrCreate: watchedTvShowsArr.map((watchedTvShow) => ({
+          where: {
+            userId_tvShowId: {
+              userId: createdUser.id,
+              tvShowId: watchedTvShow.id,
+            },
+          },
+          create: {
             tvShowId: watchedTvShow.id,
           },
         })),
       },
       toWatchMovies: {
-        connect: toWatchMoviesArr.map((toWatchMovie) => ({
-          userId_movieId: {
-            userId: createdUser.id,
+        connectOrCreate: toWatchMoviesArr.map((toWatchMovie) => ({
+          where: {
+            // Placing them inside the composite key
+            userId_movieId: {
+              userId: createdUser.id,
+              movieId: toWatchMovie.id,
+            },
+          },
+          create: {
             movieId: toWatchMovie.id,
           },
         })),
       },
       toWatchTvShows: {
-        connect: toWatchTvShowsArr.map((toWatchTvShow) => ({
-          userId_tvShowId: {
-            userId: createdUser.id,
+        connectOrCreate: toWatchTvShowsArr.map((toWatchTvShow) => ({
+          where: {
+            userId_tvShowId: {
+              userId: createdUser.id,
+              tvShowId: toWatchTvShow.id,
+            },
+          },
+          create: {
             tvShowId: toWatchTvShow.id,
           },
         })),

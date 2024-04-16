@@ -43,6 +43,77 @@ builder.queryFields((t) => ({
       const user = await prisma.user.findUnique({
         ...query,
         where: { email: args.email.email },
+        include: {
+          topFiveMovies: {
+            select: {
+              movie: {
+                select: {
+                  id: true,
+                  title: true,
+                  posterPath: true,
+                  backdropPath: true,
+                },
+              },
+            },
+          },
+          topFiveTvShows: {
+            select: {
+              tvShow: {
+                select: {
+                  id: true,
+                  title: true,
+                  posterPath: true,
+                },
+              },
+            },
+          },
+          toWatchMovies: {
+            select: {
+              movie: {
+                select: {
+                  id: true,
+                  title: true,
+                  posterPath: true,
+                  backdropPath: true,
+                },
+              },
+            },
+          },
+          toWatchTvShows: {
+            select: {
+              tvShow: {
+                select: {
+                  id: true,
+                  title: true,
+                  posterPath: true,
+                },
+              },
+            },
+          },
+          watchedMovies: {
+            select: {
+              movie: {
+                select: {
+                  id: true,
+                  title: true,
+                  posterPath: true,
+                  backdropPath: true,
+                },
+              },
+            },
+          },
+          watchedTvShows: {
+            select: {
+              tvShow: {
+                select: {
+                  id: true,
+                  title: true,
+                  posterPath: true,
+                },
+              },
+            },
+          },
+        },
       });
       if (!user) {
         throw new Error("User not found");
