@@ -1,8 +1,8 @@
 import { builder } from "../builder";
+import { prisma } from "../db";
 
 builder.prismaObject("UserTopFiveMovies", {
   fields: (t) => ({
-    userId: t.exposeID("userId"),
-    movieId: t.exposeID("movieId"),
+    movie: t.relation("movie"),
   }),
 });

@@ -15,15 +15,6 @@ builder.prismaObject("User", {
   }),
 });
 
-builder.queryFields((t) => ({
-  users: t.prismaField({
-    type: ["User"],
-    resolve: async (query, root, args, ctx, info) => {
-      return await prisma.user.findMany({ ...query });
-    },
-  }),
-}));
-
 const FindUserInput = builder.inputType("FindUserInput", {
   fields: (t) => ({
     email: t.string({ required: true }),
@@ -34,7 +25,7 @@ builder.queryFields((t) => ({
   user: t.prismaField({
     type: "User",
     args: {
-      email: t.arg({
+      user: t.arg({
         type: FindUserInput,
         required: true,
       }),
@@ -42,78 +33,78 @@ builder.queryFields((t) => ({
     resolve: async (query, root, args, ctx, info) => {
       const user = await prisma.user.findUnique({
         ...query,
-        where: { email: args.email.email },
-        include: {
-          topFiveMovies: {
-            select: {
-              movie: {
-                select: {
-                  id: true,
-                  title: true,
-                  posterPath: true,
-                  backdropPath: true,
-                },
-              },
-            },
-          },
-          topFiveTvShows: {
-            select: {
-              tvShow: {
-                select: {
-                  id: true,
-                  title: true,
-                  posterPath: true,
-                },
-              },
-            },
-          },
-          toWatchMovies: {
-            select: {
-              movie: {
-                select: {
-                  id: true,
-                  title: true,
-                  posterPath: true,
-                  backdropPath: true,
-                },
-              },
-            },
-          },
-          toWatchTvShows: {
-            select: {
-              tvShow: {
-                select: {
-                  id: true,
-                  title: true,
-                  posterPath: true,
-                },
-              },
-            },
-          },
-          watchedMovies: {
-            select: {
-              movie: {
-                select: {
-                  id: true,
-                  title: true,
-                  posterPath: true,
-                  backdropPath: true,
-                },
-              },
-            },
-          },
-          watchedTvShows: {
-            select: {
-              tvShow: {
-                select: {
-                  id: true,
-                  title: true,
-                  posterPath: true,
-                },
-              },
-            },
-          },
-        },
+        where: { email: args.user.email },
+        // include: {
+        //   topFiveMovies: {
+        //     select: {
+        //       movie: {
+        //         select: {
+        //           id: true,
+        //           title: true,
+        //           posterPath: true,
+        //           backdropPath: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        //   topFiveTvShows: {
+        //     select: {
+        //       tvShow: {
+        //         select: {
+        //           id: true,
+        //           title: true,
+        //           posterPath: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        //   toWatchMovies: {
+        //     select: {
+        //       movie: {
+        //         select: {
+        //           id: true,
+        //           title: true,
+        //           posterPath: true,
+        //           backdropPath: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        //   toWatchTvShows: {
+        //     select: {
+        //       tvShow: {
+        //         select: {
+        //           id: true,
+        //           title: true,
+        //           posterPath: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        //   watchedMovies: {
+        //     select: {
+        //       movie: {
+        //         select: {
+        //           id: true,
+        //           title: true,
+        //           posterPath: true,
+        //           backdropPath: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        //   watchedTvShows: {
+        //     select: {
+        //       tvShow: {
+        //         select: {
+        //           id: true,
+        //           title: true,
+        //           posterPath: true,
+        //         },
+        //       },
+        //     },
+        //   },
+        // },
       });
       if (!user) {
         throw new Error("User not found");
