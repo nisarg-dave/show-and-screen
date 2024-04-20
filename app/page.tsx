@@ -1,4 +1,3 @@
-import TmdbMediaCarousel from "@/components/media/TmdbMediaCarousel";
 import { UserQueryDocument } from "@/graphql/generated";
 import { getClient } from "@/app/_lib/ApolloClient";
 import MediaCarousel from "@/components/media/MediaCarousel";
@@ -67,11 +66,11 @@ export default async function Home() {
         <h2 className="text-secondary font-semibold text-xl">
           Trending Movies
         </h2>
-        <TmdbMediaCarousel movies={trendingMovies.results} />
+        <MediaCarousel tmdbMedia={trendingMovies.results} isTmdb={true} />
         <h2 className="text-secondary font-semibold text-xl">
           Trending TV Shows
         </h2>
-        <TmdbMediaCarousel movies={trendingTvShows.results} />
+        <MediaCarousel tmdbMedia={trendingTvShows.results} isTmdb={true} />
       </div>
     </main>
   );
