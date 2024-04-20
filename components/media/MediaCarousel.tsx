@@ -2,32 +2,29 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import MovieCard from "./MediaCard";
+import MediaCard from "./MediaCard";
+import { UserQueryQuery } from "@/graphql/generated";
 
 interface MediaCarouselProps {
-  movies: {
-    adult: boolean;
-    backdrop_path: string;
-    id: number;
-    title: string;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    poster_path: string;
-    media_type: string;
-    genre_ids: number[];
-    popularity: number;
-    release_date: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-  }[];
+  movies?:
+    | UserQueryQuery["user"]["topFiveMovies"]
+    | UserQueryQuery["user"]["watchedMovies"]
+    | UserQueryQuery["user"]["toWatchMovies"];
+  tvShows?:
+    | UserQueryQuery["user"]["topFiveTvShows"]
+    | UserQueryQuery["user"]["watchedTvShows"]
+    | UserQueryQuery["user"]["toWatchTvShows"];
+  isMovie: boolean;
+  isTopFiveMovie?: boolean;
 }
 
-function MediaCarousel({ movies }: any) {
+function MediaCarousel({
+  movies,
+  tvShows,
+  isMovie,
+  isTopFiveMovie,
+}: MediaCarouselProps) {
   return (
     <Carousel
       opts={{
@@ -36,11 +33,23 @@ function MediaCarousel({ movies }: any) {
       className="w-full my-3"
     >
       <CarouselContent>
-        {movies.map((movie) => (
-          <CarouselItem key={movie.id} className="md:basis-1/3 lg:basis-1/5">
-            <MovieCard imgUrl={movie.imgUrl} />
-          </CarouselItem>
-        ))}
+        {isMovie
+          ? movies?.map((mediaItem) => (
+              <CarouselItem
+                key={mediaItem.movie.id}
+                className="md:basis-1/3 lg:basis-1/5"
+              >
+                <MediaCard imgUrl={mediaItem.movie.posterPath} />
+              </CarouselItem>
+            ))
+          : tvShows?.map((mediaItem) => (
+              <CarouselItem
+                key={mediaItem.tvShow.id}
+                className="md:basis-1/3 lg:basis-1/5"
+              >
+                <MediaCard imgUrl={mediaItem.tvShow.posterPath} />
+              </CarouselItem>
+            ))}
       </CarouselContent>
     </Carousel>
   );

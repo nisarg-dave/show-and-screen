@@ -15,22 +15,32 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type FindUserInput = {
+  email: Scalars['String']['input'];
+};
+
 export type Movie = {
   __typename?: 'Movie';
+  backdropPath: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  imgUrl: Scalars['String']['output'];
+  posterPath: Scalars['String']['output'];
   title: Scalars['String']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  users: Array<User>;
+  user: User;
+};
+
+
+export type QueryUserArgs = {
+  user: FindUserInput;
 };
 
 export type TvShow = {
   __typename?: 'TvShow';
   id: Scalars['ID']['output'];
-  imgUrl: Scalars['String']['output'];
+  posterPath: Scalars['String']['output'];
   title: Scalars['String']['output'];
 };
 
@@ -39,18 +49,50 @@ export type User = {
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  toWatchMovies: Array<Movie>;
-  toWatchTvShows: Array<TvShow>;
-  topFiveMovies: Array<Movie>;
-  topFiveTvShows: Array<TvShow>;
-  watchedMovies: Array<Movie>;
-  watchedTvShows: Array<TvShow>;
+  toWatchMovies: Array<UserWantToWatchMovies>;
+  toWatchTvShows: Array<UserWantToWatchTvShows>;
+  topFiveMovies: Array<UserTopFiveMovies>;
+  topFiveTvShows: Array<UserTopFiveTvShows>;
+  watchedMovies: Array<UserWatchedMovies>;
+  watchedTvShows: Array<UserWatchedTvShows>;
 };
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserTopFiveMovies = {
+  __typename?: 'UserTopFiveMovies';
+  movie: Movie;
+};
+
+export type UserTopFiveTvShows = {
+  __typename?: 'UserTopFiveTvShows';
+  tvShow: TvShow;
+};
+
+export type UserWantToWatchMovies = {
+  __typename?: 'UserWantToWatchMovies';
+  movie: Movie;
+};
+
+export type UserWantToWatchTvShows = {
+  __typename?: 'UserWantToWatchTvShows';
+  tvShow: TvShow;
+};
+
+export type UserWatchedMovies = {
+  __typename?: 'UserWatchedMovies';
+  movie: Movie;
+};
+
+export type UserWatchedTvShows = {
+  __typename?: 'UserWatchedTvShows';
+  tvShow: TvShow;
+};
+
+export type UserQueryQueryVariables = Exact<{
+  user: FindUserInput;
+}>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, topFiveMovies: Array<{ __typename?: 'Movie', id: string, title: string, imgUrl: string }>, topFiveTvShows: Array<{ __typename?: 'TvShow', id: string, title: string, imgUrl: string }>, watchedMovies: Array<{ __typename?: 'Movie', id: string, title: string, imgUrl: string }>, watchedTvShows: Array<{ __typename?: 'TvShow', id: string, title: string, imgUrl: string }>, toWatchMovies: Array<{ __typename?: 'Movie', id: string, title: string, imgUrl: string }>, toWatchTvShows: Array<{ __typename?: 'TvShow', id: string, title: string, imgUrl: string }> }> };
+export type UserQueryQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name: string, email: string, topFiveMovies: Array<{ __typename?: 'UserTopFiveMovies', movie: { __typename?: 'Movie', id: string, title: string, posterPath: string, backdropPath: string } }>, topFiveTvShows: Array<{ __typename?: 'UserTopFiveTvShows', tvShow: { __typename?: 'TvShow', id: string, title: string, posterPath: string } }>, watchedMovies: Array<{ __typename?: 'UserWatchedMovies', movie: { __typename?: 'Movie', id: string, title: string, posterPath: string, backdropPath: string } }>, watchedTvShows: Array<{ __typename?: 'UserWatchedTvShows', tvShow: { __typename?: 'TvShow', id: string, title: string, posterPath: string } }>, toWatchMovies: Array<{ __typename?: 'UserWantToWatchMovies', movie: { __typename?: 'Movie', id: string, title: string, posterPath: string, backdropPath: string } }>, toWatchTvShows: Array<{ __typename?: 'UserWantToWatchTvShows', tvShow: { __typename?: 'TvShow', id: string, title: string, posterPath: string } }> } };
 
 
-export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"topFiveMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imgUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"topFiveTvShows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imgUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"watchedMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imgUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"watchedTvShows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imgUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toWatchMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imgUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toWatchTvShows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"imgUrl"}}]}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
+export const UserQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FindUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"topFiveMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movie"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"posterPath"}},{"kind":"Field","name":{"kind":"Name","value":"backdropPath"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"topFiveTvShows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tvShow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"posterPath"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"watchedMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movie"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"posterPath"}},{"kind":"Field","name":{"kind":"Name","value":"backdropPath"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"watchedTvShows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tvShow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"posterPath"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toWatchMovies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movie"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"posterPath"}},{"kind":"Field","name":{"kind":"Name","value":"backdropPath"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"toWatchTvShows"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tvShow"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"posterPath"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserQueryQuery, UserQueryQueryVariables>;

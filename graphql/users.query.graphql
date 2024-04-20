@@ -1,37 +1,52 @@
-query GetUsers {
-  users {
+query UserQuery($user: FindUserInput!) {
+  user(user: $user) {
     id
     name
     email
     topFiveMovies {
-      id
-      title
-      imgUrl
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
     }
     topFiveTvShows {
-      id
-      title
-      imgUrl
+      tvShow {
+        id
+        title
+        posterPath
+      }
     }
     watchedMovies {
-      id
-      title
-      imgUrl
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
     }
     watchedTvShows {
-      id
-      title
-      imgUrl
+      tvShow {
+        id
+        title
+        posterPath
+      }
     }
     toWatchMovies {
-      id
-      title
-      imgUrl
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
     }
     toWatchTvShows {
-      id
-      title
-      imgUrl
+      tvShow {
+        id
+        title
+        posterPath
+      }
     }
   }
 }
