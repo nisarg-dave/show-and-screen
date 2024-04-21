@@ -6,7 +6,7 @@ import {
 import MediaCard from "./MediaCard";
 import { UserQueryQuery } from "@/graphql/generated";
 
-export type TmdbMediaItem = {
+export type TmdbMovie = {
   adult: boolean;
   backdrop_path: string;
   id: number;
@@ -36,7 +36,7 @@ interface MediaCarouselProps {
   isMovie?: boolean;
   isTopFiveMovie?: boolean;
   isTmdb?: boolean;
-  tmdbMedia?: TmdbMediaItem[];
+  tmdbMedia?: TmdbMovie[];
 }
 
 function MediaCarousel({

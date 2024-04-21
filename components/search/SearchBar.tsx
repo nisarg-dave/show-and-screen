@@ -18,12 +18,30 @@ import {
 } from "@/components/ui/popover";
 
 import { getTrendingMovies, getTrendingTvShows } from "./actions";
-import { TmdbMediaItem } from "../media/MediaCarousel";
+import { TmdbMovie } from "../media/MediaCarousel";
+
+type TmdbTvShow = {
+  backdrop_path: string;
+  id: number;
+  original_name: string;
+  overview: string;
+  poster_path: string;
+  media_type: string;
+  adult: boolean;
+  name: string;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+  origin_country: string[];
+};
 
 function SearchBar() {
   const input = useRef<HTMLInputElement>(null);
-  const [trendingMovies, setTrendingMovies] = useState<TmdbMediaItem[]>();
-  const [trendingTvShows, setTrendingTvShows] = useState<TmdbMediaItem[]>();
+  const [trendingMovies, setTrendingMovies] = useState<TmdbMovie[]>();
+  const [trendingTvShows, setTrendingTvShows] = useState<TmdbTvShow[]>();
 
   useEffect(() => {
     const findTrendingMovies = async () => {
@@ -33,6 +51,7 @@ function SearchBar() {
 
     const findTrendingTvShows = async () => {
       const trendingItems = await getTrendingTvShows();
+      console.log(trendingItems);
       setTrendingTvShows(trendingItems!);
     };
 
@@ -53,7 +72,9 @@ function SearchBar() {
                 Suggested Movies
               </h2>
               {trendingMovies?.map((trendingItem) => (
-                <span>{trendingItem.title}</span>
+                <CommandItem key={trendingItem.id}>
+                  <span>{trendingItem.title}</span>
+                </CommandItem>
               ))}
             </CommandGroup>
             <CommandSeparator />
@@ -62,7 +83,9 @@ function SearchBar() {
                 Suggested Tv Shows
               </h2>
               {trendingTvShows?.map((trendingItem) => (
-                <span>{trendingItem.title}</span>
+                <CommandItem key={trendingItem.id}>
+                  <span>{trendingItem.name}</span>
+                </CommandItem>
               ))}
             </CommandGroup>
           </CommandList>
