@@ -4,7 +4,7 @@ import React from "react";
 function WatchedPage() {
   return (
     <main className="min-h-screen">
-      <div className="md:mx-80 mt-6">
+      <div className="flex items-center flex-col mt-6">
         <SearchBar />
       </div>
     </main>

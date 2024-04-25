@@ -22,9 +22,7 @@ function TmdbMediaCard({ imgUrl, isTmdb }: MediaCardProps) {
               <Tv2 className="text-muted-foreground hover:text-secondary w-9 h-9" />
             </div>
           </div>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </CardContent>
     </Card>
   );
