@@ -10,11 +10,18 @@ import { TmdbMovie, TmdbTvShow } from "../../types/Tmdb";
 import { Separator } from "@radix-ui/react-separator";
 
 interface DropDownMenuProps {
-  handleSelect: (mediaName: string) => void;
+  handleSelectSuggestions: (mediaName: string) => void;
+  handleSelectSearchedMovies: (movie: TmdbMovie) => void;
+  handleSelectSearchedTvShows: (tvShow: TmdbTvShow) => void;
   input: string;
 }
 
-function DropDown({ handleSelect, input }: DropDownMenuProps) {
+function DropDown({
+  handleSelectSuggestions,
+  handleSelectSearchedMovies,
+  handleSelectSearchedTvShows,
+  input,
+}: DropDownMenuProps) {
   const [trendingMovies, setTrendingMovies] = useState<TmdbMovie[]>();
   const [trendingTvShows, setTrendingTvShows] = useState<TmdbTvShow[]>();
   const [searchedMovies, setSearchedMovies] = useState<TmdbMovie[]>();
@@ -60,7 +67,7 @@ function DropDown({ handleSelect, input }: DropDownMenuProps) {
               />
               <p
                 className="ml-2"
-                onClick={() => handleSelect(searchedMovie.title)}
+                onClick={() => handleSelectSearchedMovies(searchedMovie)}
               >
                 {searchedMovie.title}
               </p>
@@ -77,7 +84,7 @@ function DropDown({ handleSelect, input }: DropDownMenuProps) {
               />
               <p
                 className="ml-2"
-                onClick={() => handleSelect(searchedTvShow.name)}
+                onClick={() => handleSelectSearchedTvShows(searchedTvShow)}
               >
                 {searchedTvShow.name}
               </p>
@@ -90,7 +97,7 @@ function DropDown({ handleSelect, input }: DropDownMenuProps) {
           {trendingMovies?.map((trendingMovie) => (
             <p
               className="my-2 cursor-pointer hover:bg-secondary hover:text-primary"
-              onClick={() => handleSelect(trendingMovie.title)}
+              onClick={() => handleSelectSuggestions(trendingMovie.title)}
             >
               {trendingMovie.title}
             </p>
@@ -100,7 +107,7 @@ function DropDown({ handleSelect, input }: DropDownMenuProps) {
           {trendingTvShows?.map((trendingTvShow) => (
             <p
               className="my-2 cursor-pointer hover:bg-secondary hover:text-primary"
-              onClick={() => handleSelect(trendingTvShow.name)}
+              onClick={() => handleSelectSuggestions(trendingTvShow.name)}
             >
               {trendingTvShow.name}
             </p>

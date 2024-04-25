@@ -3,13 +3,28 @@ import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import DropDown from "./DropDown";
-function SearchBar() {
+import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
+
+interface SearchBarProps {
+  handleAddToWatchedMovies: (movie: TmdbMovie) => void;
+}
+
+function SearchBar({ handleAddToWatchedMovies }: SearchBarProps) {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
 
-  const handleSelect = (mediaName: string) => {
+  const handleSelectSuggestions = (mediaName: string) => {
     setOpen(!open);
     setInput(mediaName);
+  };
+
+  const handleSelectSearchedMovies = (movie: TmdbMovie) => {
+    setOpen(!open);
+    handleAddToWatchedMovies(movie);
+  };
+
+  const handleSelectSearchedTvShows = (tvShow: TmdbTvShow) => {
+    setOpen(!open);
   };
 
   return (
@@ -20,7 +35,14 @@ function SearchBar() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      {open ? <DropDown handleSelect={handleSelect} input={input} /> : null}
+      {open ? (
+        <DropDown
+          handleSelectSuggestions={handleSelectSuggestions}
+          handleSelectSearchedMovies={handleSelectSearchedMovies}
+          handleSelectSearchedTvShows={handleSelectSearchedTvShows}
+          input={input}
+        />
+      ) : null}
     </>
   );
 }
