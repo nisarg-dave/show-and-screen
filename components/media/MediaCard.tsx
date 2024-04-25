@@ -6,7 +6,7 @@ interface MediaCardProps {
   isTmdb?: boolean;
 }
 
-function TmdbMediaCard({ imgUrl, isTmdb }: MediaCardProps) {
+function MediaCard({ imgUrl, isTmdb }: MediaCardProps) {
   return (
     <Card className="bg-secondary-foreground border-border relative cursor-pointer">
       <CardContent className="py-4 px-4">
@@ -28,4 +28,4 @@ function TmdbMediaCard({ imgUrl, isTmdb }: MediaCardProps) {
   );
 }
 
-export default TmdbMediaCard;
+export default MediaCard;
