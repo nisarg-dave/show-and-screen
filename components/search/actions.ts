@@ -35,3 +35,29 @@ export async function getTrendingTvShows() {
     trendingTvShows.results[2],
   ];
 }
+
+export async function searchMovie(input: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${input}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+      },
+    }
+  );
+  const searchedMovies = await res.json();
+  return searchedMovies.results;
+}
+
+export async function searchTvShow(input: string) {
+  const res = await fetch(
+    `https://api.themoviedb.org/3/search/tv?query=${input}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+      },
+    }
+  );
+  const searchedTvShows = await res.json();
+  return searchedTvShows.results;
+}

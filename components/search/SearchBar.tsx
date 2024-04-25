@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import DropDown from "./DropDown";
@@ -20,7 +20,7 @@ function SearchBar() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      {open ? <DropDown handleSelect={handleSelect} /> : null}
+      {open ? <DropDown handleSelect={handleSelect} input={input} /> : null}
     </>
   );
 }
