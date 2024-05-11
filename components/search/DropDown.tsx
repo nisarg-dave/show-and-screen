@@ -53,13 +53,17 @@ function DropDown({
     getMovie(input);
     getTvShow(input);
   }, [input]);
+
   return (
     <div className="w-[80vw] h-80 bg-muted-foreground rounded-md border border-input p-4 text-secondary overflow-y-scroll">
       {input ? (
         <>
           <h2 className="font-semibold text-base mb-2">Movie Results</h2>
           {searchedMovies?.map((searchedMovie) => (
-            <div className="flex my-2 cursor-pointer hover:bg-secondary hover:text-primary items-center">
+            <div
+              className="flex my-2 cursor-pointer hover:bg-secondary hover:text-primary items-center"
+              key={searchedMovie.id}
+            >
               <img
                 src={`https://image.tmdb.org/t/p/original/${searchedMovie.poster_path}`}
                 alt="Movie Poster"
@@ -76,7 +80,10 @@ function DropDown({
           <Separator className="my-4 border border-input mb-2" />
           <h2 className="font-semibold text-base">TV Show Results</h2>
           {searchedTvShows?.map((searchedTvShow) => (
-            <div className="flex my-2 cursor-pointer hover:bg-secondary hover:text-primary items-center">
+            <div
+              className="flex my-2 cursor-pointer hover:bg-secondary hover:text-primary items-center"
+              key={searchedTvShow.id}
+            >
               <img
                 src={`https://image.tmdb.org/t/p/original/${searchedTvShow.poster_path}`}
                 alt="TV Show Poster"
@@ -98,6 +105,7 @@ function DropDown({
             <p
               className="my-2 cursor-pointer hover:bg-secondary hover:text-primary"
               onClick={() => handleSelectSuggestions(trendingMovie.title)}
+              key={trendingMovie.id}
             >
               {trendingMovie.title}
             </p>
@@ -108,6 +116,7 @@ function DropDown({
             <p
               className="my-2 cursor-pointer hover:bg-secondary hover:text-primary"
               onClick={() => handleSelectSuggestions(trendingTvShow.name)}
+              key={trendingTvShow.id}
             >
               {trendingTvShow.name}
             </p>

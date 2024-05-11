@@ -1,5 +1,15 @@
 "use server";
 
+import { getClient } from "@/app/_lib/ApolloClient";
+import {
+  AddToWatchedMoviesMutationDocument,
+  UserQueryDocument,
+} from "@/graphql/generated";
+import { TmdbMovie } from "@/types/Tmdb";
+import { revalidatePath } from "next/cache";
+
+const client = getClient();
+
 export async function getTrendingMovies() {
   const movieRes = await fetch(
     "https://api.themoviedb.org/3/trending/movie/week",
@@ -60,4 +70,18 @@ export async function searchTvShow(input: string) {
   );
   const searchedTvShows = await res.json();
   return searchedTvShows.results;
+}
+
+export async function handleAddToWatchedWatchedMovies(movie: TmdbMovie) {
+  await client.mutate({
+    mutation: AddToWatchedMoviesMutationDocument,
+    variables: {
+      user: { email: "ndave630@gmail.com" },
+      movie: {
+        title: movie.title,
+        posterPath: movie.poster_path,
+        backdropPath: movie.backdrop_path,
+      },
+    },
+  });
 }

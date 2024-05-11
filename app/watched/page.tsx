@@ -1,12 +1,8 @@
 import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getClient } from "@/app/_lib/ApolloClient";
-import {
-  UserQueryDocument,
-  AddToWatchedMoviesMutationDocument,
-} from "@/graphql/generated";
+import { UserQueryDocument } from "@/graphql/generated";
 import MediaCard from "@/components/media/MediaCard";
-import { TmdbMovie } from "@/types/Tmdb";
 
 async function WatchedPage() {
   const client = getClient();
@@ -14,32 +10,21 @@ async function WatchedPage() {
     query: UserQueryDocument,
     variables: { user: { email: "ndave630@gmail.com" } },
   });
-  const currentUser = data.user;
+  let currentUser = data.user;
 
-  const handleAddToWatchedWatchedMovies = async (movie: TmdbMovie) => {
-    // Can't pass to client unless marked use server
-    "use server";
-
-    console.log(movie);
-    await client.mutate({
-      mutation: AddToWatchedMoviesMutationDocument,
-      awaitRefetchQueries: true,
-      refetchQueries: [UserQueryDocument],
-      variables: {
-        user: { email: "ndave630@gmail.com" },
-        movie: {
-          title: movie.title,
-          posterPath: movie.poster_path,
-          backdropPath: movie.backdrop_path,
-        },
-      },
+  setInterval(async () => {
+    const { data } = await client.query({
+      query: UserQueryDocument,
+      variables: { user: { email: "ndave630@gmail.com" } },
+      fetchPolicy: "network-only", // Doesn't check cache before making a network request
     });
-  };
+    currentUser = data.user;
+  }, 500);
 
   return (
     <main className="min-h-screen flex items-center flex-col">
       <div className="mt-6">
-        <SearchBar handleAddToWatchedMovies={handleAddToWatchedWatchedMovies} />
+        <SearchBar />
       </div>
       <div className="mt-5">
         <Tabs defaultValue="Watched Movies" className="w-[80vw]">
