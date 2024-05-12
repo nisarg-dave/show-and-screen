@@ -14,7 +14,7 @@ async function WatchedPage() {
     variables: { user: { email: "ndave630@gmail.com" } },
     fetchPolicy: "network-only", // Doesn't check cache before making a network request
   });
-  let currentUser = data.user;
+  const currentUser = data.user;
 
   return (
     <main className="min-h-screen flex items-center flex-col">

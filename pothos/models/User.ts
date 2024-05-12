@@ -1,6 +1,7 @@
 import { builder } from "../builder";
 import { prisma } from "../db";
 import { MovieInput } from "./Movie";
+import { TvShowInput } from "./TvShow";
 
 builder.prismaObject("User", {
   fields: (t) => ({
@@ -115,6 +116,84 @@ builder.mutationFields((t) => ({
                   userId_movieId: {
                     userId: user.id,
                     movieId: createdMovie.id,
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+    },
+  }),
+  addToWatchedTvShows: t.prismaField({
+    type: "User",
+    args: {
+      user: t.arg({
+        type: FindUserInput,
+        required: true,
+      }),
+      tvShow: t.arg({
+        type: TvShowInput,
+        required: true,
+      }),
+    },
+    resolve: async (query, parent, args) => {
+      const foundTvShow = await prisma.tvShow.findFirst({
+        where: {
+          title: args.tvShow.title,
+        },
+      });
+
+      const user = await prisma.user.findUnique({
+        ...query,
+        where: { email: args.user.email },
+      });
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      if (foundTvShow) {
+        return await prisma.user.update({
+          where: {
+            email: user.email,
+          },
+          data: {
+            watchedTvShows: {
+              connectOrCreate: {
+                create: {
+                  tvShowId: foundTvShow.id,
+                },
+                where: {
+                  userId_tvShowId: {
+                    userId: user.id,
+                    tvShowId: foundTvShow.id,
+                  },
+                },
+              },
+            },
+          },
+        });
+      } else {
+        const createdTvShow = await prisma.tvShow.create({
+          data: {
+            title: args.tvShow.title,
+            posterPath: args.tvShow.posterPath,
+          },
+        });
+        return await prisma.user.update({
+          where: {
+            email: user.email,
+          },
+          data: {
+            watchedTvShows: {
+              connectOrCreate: {
+                create: {
+                  tvShowId: createdTvShow.id,
+                },
+                where: {
+                  userId_tvShowId: {
+                    userId: user.id,
+                    tvShowId: createdTvShow.id,
                   },
                 },
               },

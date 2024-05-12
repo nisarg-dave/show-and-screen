@@ -3,10 +3,11 @@
 import { getClient } from "@/app/_lib/ApolloClient";
 import {
   AddToWatchedMoviesMutationDocument,
+  AddToWatchedTvShowsMutationDocument,
   UserQueryDocument,
   UserQueryQuery,
 } from "@/graphql/generated";
-import { TmdbMovie } from "@/types/Tmdb";
+import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import { revalidatePath } from "next/cache";
 
 const client = getClient();
@@ -73,7 +74,7 @@ export async function searchTvShow(input: string) {
   return searchedTvShows.results;
 }
 
-export async function handleAddToWatchedWatchedMovies(movie: TmdbMovie) {
+export async function handleAddToWatchedMovies(movie: TmdbMovie) {
   await client.mutate({
     mutation: AddToWatchedMoviesMutationDocument,
     variables: {
@@ -87,13 +88,29 @@ export async function handleAddToWatchedWatchedMovies(movie: TmdbMovie) {
   });
 }
 
+export async function handleAddToWatchedTvShows(tvShow: TmdbTvShow) {
+  await client.mutate({
+    mutation: AddToWatchedTvShowsMutationDocument,
+    variables: {
+      user: { email: "ndave630@gmail.com" },
+      tvShow: {
+        title: tvShow.name,
+        posterPath: tvShow.poster_path,
+      },
+    },
+  });
+}
+
 export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
   const { data } = await client.query({
     query: UserQueryDocument,
-    variables: { user: { email: "ndave630@gmail.com" } },
+    variables: { user: { email: currentUser.email } },
     fetchPolicy: "network-only", // Doesn't check cache before making a network request
   });
-  if (currentUser.watchedMovies.length !== data.user.watchedMovies.length) {
+  if (
+    currentUser.watchedMovies.length !== data.user.watchedMovies.length ||
+    currentUser.watchedTvShows.length !== data.user.watchedTvShows.length
+  ) {
     revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
   }
 }

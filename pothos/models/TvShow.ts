@@ -7,3 +7,10 @@ builder.prismaObject("TvShow", {
     posterPath: t.exposeString("posterPath"),
   }),
 });
+
+export const TvShowInput = builder.inputType("TvShowInput", {
+  fields: (t) => ({
+    title: t.string({ required: true }),
+    posterPath: t.string({ required: true }),
+  }),
+});
