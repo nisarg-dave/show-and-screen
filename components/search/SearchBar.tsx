@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import DropDown from "./DropDown";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
-import { handleAddToWatchedWatchedMovies } from "./actions";
+import { handleAddToWatchedWatchedMovies } from "../../app/actions";
 
 function SearchBar() {
   const [input, setInput] = useState("");

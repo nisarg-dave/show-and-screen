@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import {
-  getTrendingMovies,
-  getTrendingTvShows,
+  getTopThreeTrendingMovies,
+  getTopThreeTrendingTvShows,
   searchMovie,
   searchTvShow,
-} from "./actions";
+} from "../../app/actions";
 import { TmdbMovie, TmdbTvShow } from "../../types/Tmdb";
 import { Separator } from "@radix-ui/react-separator";
 
@@ -29,12 +29,12 @@ function DropDown({
 
   useEffect(() => {
     const findTrendingMovies = async () => {
-      const trendingItems = await getTrendingMovies();
+      const trendingItems = await getTopThreeTrendingMovies();
       setTrendingMovies(trendingItems!);
     };
 
     const findTrendingTvShows = async () => {
-      const trendingItems = await getTrendingTvShows();
+      const trendingItems = await getTopThreeTrendingTvShows();
       setTrendingTvShows(trendingItems!);
     };
 

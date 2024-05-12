@@ -3,29 +3,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getClient } from "@/app/_lib/ApolloClient";
 import { UserQueryDocument } from "@/graphql/generated";
 import MediaCard from "@/components/media/MediaCard";
+import { revalidatePath } from "next/cache";
+import RefreshCache from "./refresh-cache";
+import { checkWatchedChanged } from "../actions";
 
 async function WatchedPage() {
   const client = getClient();
   const { data } = await client.query({
     query: UserQueryDocument,
     variables: { user: { email: "ndave630@gmail.com" } },
+    fetchPolicy: "network-only", // Doesn't check cache before making a network request
   });
   let currentUser = data.user;
-
-  setInterval(async () => {
-    const { data } = await client.query({
-      query: UserQueryDocument,
-      variables: { user: { email: "ndave630@gmail.com" } },
-      fetchPolicy: "network-only", // Doesn't check cache before making a network request
-    });
-    currentUser = data.user;
-  }, 500);
 
   return (
     <main className="min-h-screen flex items-center flex-col">
       <div className="mt-6">
         <SearchBar />
       </div>
+      <RefreshCache check={checkWatchedChanged} currentUser={currentUser} />
       <div className="mt-5">
         <Tabs defaultValue="Watched Movies" className="w-[80vw]">
           <TabsList className="grid w-full grid-cols-2 bg-muted-foreground">

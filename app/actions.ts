@@ -4,13 +4,14 @@ import { getClient } from "@/app/_lib/ApolloClient";
 import {
   AddToWatchedMoviesMutationDocument,
   UserQueryDocument,
+  UserQueryQuery,
 } from "@/graphql/generated";
 import { TmdbMovie } from "@/types/Tmdb";
 import { revalidatePath } from "next/cache";
 
 const client = getClient();
 
-export async function getTrendingMovies() {
+export async function getTopThreeTrendingMovies() {
   const movieRes = await fetch(
     "https://api.themoviedb.org/3/trending/movie/week",
     {
@@ -28,7 +29,7 @@ export async function getTrendingMovies() {
   ];
 }
 
-export async function getTrendingTvShows() {
+export async function getTopThreeTrendingTvShows() {
   const tvShowsRes = await fetch(
     "https://api.themoviedb.org/3/trending/tv/week",
     {
@@ -84,4 +85,15 @@ export async function handleAddToWatchedWatchedMovies(movie: TmdbMovie) {
       },
     },
   });
+}
+
+export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
+  const { data } = await client.query({
+    query: UserQueryDocument,
+    variables: { user: { email: "ndave630@gmail.com" } },
+    fetchPolicy: "network-only", // Doesn't check cache before making a network request
+  });
+  if (currentUser.watchedMovies.length !== data.user.watchedMovies.length) {
+    revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
+  }
 }

@@ -63,6 +63,7 @@ export default async function Home() {
     query: UserQueryDocument,
     variables: { user: { email: "ndave630@gmail.com" } },
   });
+
   const currentUser = data.user;
 
   return (
@@ -72,30 +73,30 @@ export default async function Home() {
           My Top 5 Movies
         </h2>
         <MediaCarousel
-          movies={currentUser.topFiveMovies}
+          movies={currentUser?.topFiveMovies}
           isMovie={true}
           isTopFiveMovie={true}
         />
         <h2 className="text-secondary font-semibold text-xl">
           My Top 5 TV Shows
         </h2>
-        <MediaCarousel tvShows={currentUser.topFiveTvShows} isMovie={false} />
+        <MediaCarousel tvShows={currentUser?.topFiveTvShows} isMovie={false} />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched Movies
         </h2>
-        <MediaCarousel movies={currentUser.watchedMovies} isMovie={true} />
+        <MediaCarousel movies={currentUser?.watchedMovies} isMovie={true} />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched TV Shows
         </h2>
-        <MediaCarousel tvShows={currentUser.watchedTvShows} isMovie={false} />
+        <MediaCarousel tvShows={currentUser?.watchedTvShows} isMovie={false} />
         <h2 className="text-secondary font-semibold text-xl">
           Movies I Want To Watch
         </h2>
-        <MediaCarousel movies={currentUser.toWatchMovies} isMovie={true} />
+        <MediaCarousel movies={currentUser?.toWatchMovies} isMovie={true} />
         <h2 className="text-secondary font-semibold text-xl">
           TV Shows I Want To Watch
         </h2>
-        <MediaCarousel tvShows={currentUser.toWatchTvShows} isMovie={false} />
+        <MediaCarousel tvShows={currentUser?.toWatchTvShows} isMovie={false} />
         <h2 className="text-secondary font-semibold text-xl">
           Trending Movies
         </h2>
