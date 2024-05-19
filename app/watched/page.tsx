@@ -3,9 +3,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getClient } from "@/app/_lib/ApolloClient";
 import { UserQueryDocument } from "@/graphql/generated";
 import MediaCard from "@/components/media/MediaCard";
-import { revalidatePath } from "next/cache";
+
 import RefreshCache from "./refresh-cache";
 import { checkWatchedChanged } from "../actions";
+import { Suspense } from "react";
 
 async function WatchedPage() {
   const client = getClient();
@@ -33,24 +34,36 @@ async function WatchedPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="Watched Movies">
-            <div className="grid grid-cols-1 p-6 sm:grid-cols-2 sm:p-6 md:grid-cols-3 md:p-4 gap-4">
-              {currentUser.watchedMovies.map((watchedMovie) => (
-                <MediaCard
-                  key={watchedMovie.movie.id}
-                  imgUrl={watchedMovie.movie.posterPath}
-                />
-              ))}
-            </div>
+            <Suspense
+              fallback={
+                <p className="text-secondary text-3xl">Loading Movies...</p>
+              }
+            >
+              <div className="grid grid-cols-1 p-6 sm:grid-cols-2 sm:p-6 md:grid-cols-4 md:p-4 gap-4">
+                {currentUser.watchedMovies.map((watchedMovie) => (
+                  <MediaCard
+                    key={watchedMovie.movie.id}
+                    imgUrl={watchedMovie.movie.posterPath}
+                  />
+                ))}
+              </div>
+            </Suspense>
           </TabsContent>
           <TabsContent value="Watched TV Shows">
-            <div className="grid grid-cols-1 p-6 sm:grid-cols-2 sm:p-6 md:grid-cols-3 md:p-4 gap-4">
-              {currentUser.watchedTvShows.map((watchedTvShow) => (
-                <MediaCard
-                  key={watchedTvShow.tvShow.id}
-                  imgUrl={watchedTvShow.tvShow.posterPath}
-                />
-              ))}
-            </div>
+            <Suspense
+              fallback={
+                <p className="text-secondary text-3xl">Loading TV Shows...</p>
+              }
+            >
+              <div className="grid grid-cols-1 p-6 sm:grid-cols-2 sm:p-6 md:grid-cols-4 md:p-4 gap-4">
+                {currentUser.watchedTvShows.map((watchedTvShow) => (
+                  <MediaCard
+                    key={watchedTvShow.tvShow.id}
+                    imgUrl={watchedTvShow.tvShow.posterPath}
+                  />
+                ))}
+              </div>
+            </Suspense>
           </TabsContent>
         </Tabs>
       </div>
