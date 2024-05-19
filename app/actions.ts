@@ -4,6 +4,7 @@ import { getClient } from "@/app/_lib/ApolloClient";
 import {
   AddToWatchedMoviesMutationDocument,
   AddToWatchedTvShowsMutationDocument,
+  RemoveFromTopFiveMoviesMutationDocument,
   UserQueryDocument,
   UserQueryQuery,
 } from "@/graphql/generated";
@@ -113,4 +114,26 @@ export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
   ) {
     revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
   }
+}
+
+export async function getCurrentUser(email: string) {
+  const { data } = await client.query({
+    query: UserQueryDocument,
+    variables: { user: { email } },
+    fetchPolicy: "network-only", // Doesn't check cache before making a network request
+  });
+  return data.user;
+}
+
+export async function handleRemoveFromTopFiveMovies() {
+  const currentUser = await getCurrentUser("ndave630@gmail.com");
+  await client.mutate({
+    mutation: RemoveFromTopFiveMoviesMutationDocument,
+    variables: {
+      user: { email: currentUser.email },
+      movie: {
+        title: "Enemy",
+      },
+    },
+  });
 }

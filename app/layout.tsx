@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/navigation/NavBar";
 import { ApolloWrapper } from "@/app/_lib/Apollo-Wrapper";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <ApolloWrapper>
           <NavBar />
           {children}
+          <Toaster />
         </ApolloWrapper>
       </body>
     </html>

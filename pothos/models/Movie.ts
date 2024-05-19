@@ -16,3 +16,9 @@ export const MovieInput = builder.inputType("MovieInput", {
     backdropPath: t.string({ required: true }),
   }),
 });
+
+export const MovieTitleInput = builder.inputType("MovieTitleInput", {
+  fields: (t) => ({
+    title: t.string({ required: true }),
+  }),
+});

@@ -1,6 +1,7 @@
+import { disconnect } from "process";
 import { builder } from "../builder";
 import { prisma } from "../db";
-import { MovieInput } from "./Movie";
+import { MovieInput, MovieTitleInput } from "./Movie";
 import { TvShowInput } from "./TvShow";
 
 builder.prismaObject("User", {
@@ -201,6 +202,54 @@ builder.mutationFields((t) => ({
           },
         });
       }
+    },
+  }),
+  removeFromTopFiveMovies: t.prismaField({
+    type: "User",
+    args: {
+      user: t.arg({
+        type: FindUserInput,
+        required: true,
+      }),
+      movie: t.arg({
+        type: MovieTitleInput,
+        required: true,
+      }),
+    },
+    resolve: async (query, parent, args) => {
+      const foundMovie = await prisma.movie.findFirst({
+        where: {
+          title: args.movie.title,
+        },
+      });
+
+      const user = await prisma.user.findUnique({
+        ...query,
+        where: { email: args.user.email },
+      });
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+      if (!foundMovie) {
+        throw new Error("Movie not found");
+      }
+
+      return prisma.user.update({
+        where: {
+          email: args.user.email,
+        },
+        data: {
+          topFiveMovies: {
+            disconnect: {
+              userId_movieId: {
+                movieId: foundMovie.id,
+                userId: user.id,
+              },
+            },
+          },
+        },
+      });
     },
   }),
 }));
