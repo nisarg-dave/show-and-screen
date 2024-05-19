@@ -10,16 +10,14 @@ import { TmdbMovie, TmdbTvShow } from "../../types/Tmdb";
 import { Separator } from "@radix-ui/react-separator";
 
 interface DropDownMenuProps {
-  handleSelectSuggestions: (mediaName: string) => void;
-  handleSelectSearchedMovies: (movie: TmdbMovie) => void;
-  handleSelectSearchedTvShows: (tvShow: TmdbTvShow) => void;
+  handleSelectMovie: (movie: TmdbMovie) => void;
+  handleSelectTvShow: (tvShow: TmdbTvShow) => void;
   input: string;
 }
 
 function DropDown({
-  handleSelectSuggestions,
-  handleSelectSearchedMovies,
-  handleSelectSearchedTvShows,
+  handleSelectMovie,
+  handleSelectTvShow,
   input,
 }: DropDownMenuProps) {
   const [trendingMovies, setTrendingMovies] = useState<TmdbMovie[]>();
@@ -71,7 +69,7 @@ function DropDown({
               />
               <p
                 className="ml-2"
-                onClick={() => handleSelectSearchedMovies(searchedMovie)}
+                onClick={() => handleSelectMovie(searchedMovie)}
               >
                 {searchedMovie.title}
               </p>
@@ -91,7 +89,7 @@ function DropDown({
               />
               <p
                 className="ml-2"
-                onClick={() => handleSelectSearchedTvShows(searchedTvShow)}
+                onClick={() => handleSelectTvShow(searchedTvShow)}
               >
                 {searchedTvShow.name}
               </p>
@@ -104,7 +102,7 @@ function DropDown({
           {trendingMovies?.map((trendingMovie) => (
             <p
               className="my-2 cursor-pointer hover:bg-secondary hover:text-primary"
-              onClick={() => handleSelectSuggestions(trendingMovie.title)}
+              onClick={() => handleSelectMovie(trendingMovie)}
               key={trendingMovie.id}
             >
               {trendingMovie.title}
@@ -115,7 +113,7 @@ function DropDown({
           {trendingTvShows?.map((trendingTvShow) => (
             <p
               className="my-2 cursor-pointer hover:bg-secondary hover:text-primary"
-              onClick={() => handleSelectSuggestions(trendingTvShow.name)}
+              onClick={() => handleSelectTvShow(trendingTvShow)}
               key={trendingTvShow.id}
             >
               {trendingTvShow.name}

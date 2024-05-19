@@ -13,18 +13,13 @@ function SearchBar() {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
 
-  const handleSelectSuggestions = (mediaName: string) => {
-    setOpen(!open);
-    setInput(mediaName);
-  };
-
-  const handleSelectSearchedMovies = (movie: TmdbMovie) => {
+  const handleSelectMovie = (movie: TmdbMovie) => {
     setOpen(!open);
     setInput(movie.title);
     handleAddToWatchedMovies(movie);
   };
 
-  const handleSelectSearchedTvShows = (tvShow: TmdbTvShow) => {
+  const handleSelectTvShow = (tvShow: TmdbTvShow) => {
     setOpen(!open);
     setInput(tvShow.name);
     handleAddToWatchedTvShows(tvShow);
@@ -40,9 +35,8 @@ function SearchBar() {
       />
       {open ? (
         <DropDown
-          handleSelectSuggestions={handleSelectSuggestions}
-          handleSelectSearchedMovies={handleSelectSearchedMovies}
-          handleSelectSearchedTvShows={handleSelectSearchedTvShows}
+          handleSelectMovie={handleSelectMovie}
+          handleSelectTvShow={handleSelectTvShow}
           input={input}
         />
       ) : null}
