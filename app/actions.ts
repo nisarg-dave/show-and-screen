@@ -103,14 +103,10 @@ export async function handleAddToWatchedTvShows(tvShow: TmdbTvShow) {
 }
 
 export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
-  const { data } = await client.query({
-    query: UserQueryDocument,
-    variables: { user: { email: currentUser.email } },
-    fetchPolicy: "network-only", // Doesn't check cache before making a network request
-  });
+  const user = await getCurrentUser(currentUser.email);
   if (
-    currentUser.watchedMovies.length !== data.user.watchedMovies.length ||
-    currentUser.watchedTvShows.length !== data.user.watchedTvShows.length
+    currentUser.watchedMovies.length !== user.watchedMovies.length ||
+    currentUser.watchedTvShows.length !== user.watchedTvShows.length
   ) {
     revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
   }

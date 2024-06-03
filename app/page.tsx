@@ -1,6 +1,5 @@
-import { UserQueryDocument } from "@/graphql/generated";
-import { getClient } from "@/app/_lib/ApolloClient";
 import MediaCarousel from "@/components/media/MediaCarousel";
+import { getCurrentUser } from "./actions";
 
 async function getTrendingMovies() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
@@ -58,13 +57,7 @@ export default async function Home() {
   const nowPlayingMovies = await getNowPlayingMovies();
   const upcomingMovies = await getUpcomingMovies();
   const topRatedTvShows = await getTopRatedTvShows();
-  const client = getClient();
-  const { data } = await client.query({
-    query: UserQueryDocument,
-    variables: { user: { email: "ndave630@gmail.com" } },
-  });
-
-  const currentUser = data.user;
+  const currentUser = await getCurrentUser("ndave630@gmail.com");
 
   return (
     <main className="min-h-screen min-w-screen">

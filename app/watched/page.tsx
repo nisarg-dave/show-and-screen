@@ -1,21 +1,13 @@
 import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getClient } from "@/app/_lib/ApolloClient";
-import { UserQueryDocument } from "@/graphql/generated";
 import MediaCard from "@/components/media/MediaCard";
 
 import RefreshCache from "./refresh-cache";
-import { checkWatchedChanged } from "../actions";
+import { checkWatchedChanged, getCurrentUser } from "../actions";
 import { Suspense } from "react";
 
 async function WatchedPage() {
-  const client = getClient();
-  const { data } = await client.query({
-    query: UserQueryDocument,
-    variables: { user: { email: "ndave630@gmail.com" } },
-    fetchPolicy: "network-only", // Doesn't check cache before making a network request
-  });
-  const currentUser = data.user;
+  const currentUser = await getCurrentUser("ndave630@gmail.com");
   const topFiveMovieIds = currentUser.topFiveMovies.map(
     (item) => item.movie.id
   );
