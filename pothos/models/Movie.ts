@@ -17,8 +17,8 @@ export const MovieInput = builder.inputType("MovieInput", {
   }),
 });
 
-export const MovieTitleInput = builder.inputType("MovieTitleInput", {
+export const MovieIdInput = builder.inputType("MovieIdInput", {
   fields: (t) => ({
-    title: t.string({ required: true }),
+    id: t.string({ required: true }),
   }),
 });

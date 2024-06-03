@@ -293,6 +293,10 @@ async function main() {
     },
   });
 
+  // When you use create directly within the topFiveMovies field of the user.update mutation:
+  // You specify the movieId for each movie in your top five list.
+  // Prisma interprets this as an instruction to create a new entry in the UserTopFiveMovies table.
+  // Prisma automatically sets the userId value based on the where clause in the user update (email: "ndave630@gmail.com"). This ensures the association is created between the specific user and the movies you're referencing.
   await prisma.user.update({
     where: { email: "ndave630@gmail.com" },
     data: {

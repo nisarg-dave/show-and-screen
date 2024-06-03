@@ -44,12 +44,16 @@ async function WatchedPage() {
                       key={watchedMovie.movie.id}
                       imgUrl={watchedMovie.movie.posterPath}
                       isTopFive={true}
+                      isMovie={true}
+                      id={watchedMovie.movie.id}
                     />
                   ) : (
                     <MediaCard
                       key={watchedMovie.movie.id}
                       imgUrl={watchedMovie.movie.posterPath}
                       isWatched={true}
+                      isMovie={true}
+                      id={watchedMovie.movie.id}
                     />
                   )
                 )}
@@ -69,12 +73,16 @@ async function WatchedPage() {
                       key={watchedTvShow.tvShow.id}
                       imgUrl={watchedTvShow.tvShow.posterPath}
                       isTopFive={true}
+                      isTvShow={true}
+                      id={watchedTvShow.tvShow.id}
                     />
                   ) : (
                     <MediaCard
                       key={watchedTvShow.tvShow.id}
                       imgUrl={watchedTvShow.tvShow.posterPath}
                       isWatched={true}
+                      isTvShow={true}
+                      id={watchedTvShow.tvShow.id}
                     />
                   )
                 )}

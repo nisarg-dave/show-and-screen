@@ -106,7 +106,9 @@ export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
   const user = await getCurrentUser(currentUser.email);
   if (
     currentUser.watchedMovies.length !== user.watchedMovies.length ||
-    currentUser.watchedTvShows.length !== user.watchedTvShows.length
+    currentUser.watchedTvShows.length !== user.watchedTvShows.length ||
+    currentUser.topFiveMovies.length !== user.topFiveMovies.length ||
+    currentUser.topFiveTvShows.length !== user.toWatchTvShows.length
   ) {
     revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
   }
@@ -121,14 +123,17 @@ export async function getCurrentUser(email: string) {
   return data.user;
 }
 
-export async function handleRemoveFromTopFiveMovies() {
-  const currentUser = await getCurrentUser("ndave630@gmail.com");
+export async function handleRemoveFromTopFiveMovies(
+  currentUserEmail: string,
+  id: string
+) {
+  const currentUser = await getCurrentUser(currentUserEmail);
   await client.mutate({
     mutation: RemoveFromTopFiveMoviesMutationDocument,
     variables: {
       user: { email: currentUser.email },
       movie: {
-        title: "Enemy",
+        id,
       },
     },
   });

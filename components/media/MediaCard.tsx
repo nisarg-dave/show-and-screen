@@ -7,9 +7,20 @@ interface MediaCardProps {
   isTmdb?: boolean;
   isTopFive?: boolean;
   isWatched?: boolean;
+  id?: string;
+  isMovie?: boolean;
+  isTvShow?: boolean;
 }
 
-function MediaCard({ imgUrl, isTmdb, isTopFive, isWatched }: MediaCardProps) {
+function MediaCard({
+  imgUrl,
+  isTmdb,
+  isTopFive,
+  isWatched,
+  id,
+  isMovie,
+  isTvShow,
+}: MediaCardProps) {
   return (
     // The relative positioning on the .Card creates a reference point for absolute positioning of its child elements.
     // The absolute positioning on the inner div creates an overlay effect on top of the .CardContent within the boundaries of the .Card.
@@ -30,12 +41,17 @@ function MediaCard({ imgUrl, isTmdb, isTopFive, isWatched }: MediaCardProps) {
         ) : null}
         {isTopFive ? (
           <div className="mt-2">
-            <TopFiveButton isTopFive={isTopFive} />
+            <TopFiveButton
+              isTopFive={isTopFive}
+              id={id!}
+              isMovie={isMovie}
+              isTvShow={isTvShow}
+            />
           </div>
         ) : null}
         {isWatched ? (
           <div className="mt-2">
-            <TopFiveButton />
+            <TopFiveButton id={id!} isMovie={isMovie} isTvShow={isTvShow} />
           </div>
         ) : null}
       </CardContent>

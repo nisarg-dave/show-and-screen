@@ -5,9 +5,17 @@ import { handleRemoveFromTopFiveMovies } from "@/app/actions";
 
 interface TopFiveButtonProps {
   isTopFive?: boolean;
+  isMovie?: boolean;
+  isTvShow?: boolean;
+  id: string;
 }
 
-function TopFiveButton({ isTopFive }: TopFiveButtonProps) {
+function TopFiveButton({
+  isTopFive,
+  isMovie,
+  isTvShow,
+  id,
+}: TopFiveButtonProps) {
   const { toast } = useToast();
 
   return (
@@ -16,11 +24,13 @@ function TopFiveButton({ isTopFive }: TopFiveButtonProps) {
         <Button
           className="w-full"
           onClick={() => {
-            handleRemoveFromTopFiveMovies();
-            toast({
-              title: "Removed From Top Five",
-              description: "Removed From Top Five",
-            });
+            if (isMovie) {
+              handleRemoveFromTopFiveMovies("ndave630@gmail.com", id);
+              toast({
+                title: "Removed From Top Five",
+                description: "Removed From Top Five",
+              });
+            }
           }}
         >
           Remove From Top Five

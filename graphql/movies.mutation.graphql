@@ -53,22 +53,3 @@ mutation AddToWatchedMoviesMutation(
     }
   }
 }
-
-mutation RemoveFromTopFiveMoviesMutation(
-  $user: FindUserInput!
-  $movie: MovieTitleInput!
-) {
-  removeFromTopFiveMovies(user: $user, movie: $movie) {
-    id
-    name
-    email
-    topFiveMovies {
-      movie {
-        id
-        title
-        posterPath
-        backdropPath
-      }
-    }
-  }
-}
