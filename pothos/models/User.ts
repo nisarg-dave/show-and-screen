@@ -1,7 +1,6 @@
-import { disconnect } from "process";
 import { builder } from "../builder";
 import { prisma } from "../db";
-import { MovieInput, MovieTitleInput } from "./Movie";
+import { MovieInput } from "./Movie";
 import { TvShowInput } from "./TvShow";
 
 builder.prismaObject("User", {
@@ -18,7 +17,7 @@ builder.prismaObject("User", {
   }),
 });
 
-const FindUserInput = builder.inputType("FindUserInput", {
+export const FindUserInput = builder.inputType("FindUserInput", {
   fields: (t) => ({
     email: t.string({ required: true }),
   }),
@@ -81,16 +80,8 @@ builder.mutationFields((t) => ({
           },
           data: {
             watchedMovies: {
-              connectOrCreate: {
-                create: {
-                  movieId: foundMovie.id,
-                },
-                where: {
-                  userId_movieId: {
-                    userId: user.id,
-                    movieId: foundMovie.id,
-                  },
-                },
+              create: {
+                movieId: foundMovie.id,
               },
             },
           },
@@ -109,16 +100,8 @@ builder.mutationFields((t) => ({
           },
           data: {
             watchedMovies: {
-              connectOrCreate: {
-                create: {
-                  movieId: createdMovie.id,
-                },
-                where: {
-                  userId_movieId: {
-                    userId: user.id,
-                    movieId: createdMovie.id,
-                  },
-                },
+              create: {
+                movieId: createdMovie.id,
               },
             },
           },
@@ -160,16 +143,8 @@ builder.mutationFields((t) => ({
           },
           data: {
             watchedTvShows: {
-              connectOrCreate: {
-                create: {
-                  tvShowId: foundTvShow.id,
-                },
-                where: {
-                  userId_tvShowId: {
-                    userId: user.id,
-                    tvShowId: foundTvShow.id,
-                  },
-                },
+              create: {
+                tvShowId: foundTvShow.id,
               },
             },
           },
@@ -187,69 +162,13 @@ builder.mutationFields((t) => ({
           },
           data: {
             watchedTvShows: {
-              connectOrCreate: {
-                create: {
-                  tvShowId: createdTvShow.id,
-                },
-                where: {
-                  userId_tvShowId: {
-                    userId: user.id,
-                    tvShowId: createdTvShow.id,
-                  },
-                },
+              create: {
+                tvShowId: createdTvShow.id,
               },
             },
           },
         });
       }
-    },
-  }),
-  removeFromTopFiveMovies: t.prismaField({
-    type: "User",
-    args: {
-      user: t.arg({
-        type: FindUserInput,
-        required: true,
-      }),
-      movie: t.arg({
-        type: MovieTitleInput,
-        required: true,
-      }),
-    },
-    resolve: async (query, parent, args) => {
-      const foundMovie = await prisma.movie.findFirst({
-        where: {
-          title: args.movie.title,
-        },
-      });
-
-      const user = await prisma.user.findUnique({
-        ...query,
-        where: { email: args.user.email },
-      });
-
-      if (!user) {
-        throw new Error("User not found");
-      }
-      if (!foundMovie) {
-        throw new Error("Movie not found");
-      }
-
-      return prisma.user.update({
-        where: {
-          email: args.user.email,
-        },
-        data: {
-          topFiveMovies: {
-            disconnect: {
-              userId_movieId: {
-                movieId: foundMovie.id,
-                userId: user.id,
-              },
-            },
-          },
-        },
-      });
     },
   }),
 }));
