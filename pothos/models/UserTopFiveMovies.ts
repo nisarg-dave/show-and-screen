@@ -63,4 +63,42 @@ builder.mutationFields((t) => ({
       });
     },
   }),
+  addToTopFiveMovies: t.prismaField({
+    type: "UserTopFiveMovies",
+    args: {
+      user: t.arg({
+        type: FindUserInput,
+        required: true,
+      }),
+      movie: t.arg({
+        type: MovieIdInput,
+        required: true,
+      }),
+    },
+    resolve: async (query, parent, args) => {
+      const foundMovie = await prisma.movie.findFirst({
+        where: {
+          id: args.movie.id,
+        },
+      });
+
+      const foundUser = await prisma.user.findUnique({
+        where: { email: args.user.email },
+      });
+
+      if (!foundUser) {
+        throw new Error("User not found");
+      }
+      if (!foundMovie) {
+        throw new Error("Movie not found");
+      }
+
+      return prisma.userTopFiveMovies.create({
+        data: {
+          movieId: foundMovie.id,
+          userId: foundUser.id,
+        },
+      });
+    },
+  }),
 }));

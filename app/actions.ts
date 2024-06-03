@@ -2,9 +2,12 @@
 
 import { getClient } from "@/app/_lib/ApolloClient";
 import {
+  AddToTopFiveMoviesMutationDocument,
+  AddToTopFiveTvShowsMutationDocument,
   AddToWatchedMoviesMutationDocument,
   AddToWatchedTvShowsMutationDocument,
   RemoveFromTopFiveMoviesMutationDocument,
+  RemoveFromTopFiveTvShowsMutationDocument,
   UserQueryDocument,
   UserQueryQuery,
 } from "@/graphql/generated";
@@ -108,7 +111,7 @@ export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
     currentUser.watchedMovies.length !== user.watchedMovies.length ||
     currentUser.watchedTvShows.length !== user.watchedTvShows.length ||
     currentUser.topFiveMovies.length !== user.topFiveMovies.length ||
-    currentUser.topFiveTvShows.length !== user.toWatchTvShows.length
+    currentUser.topFiveTvShows.length !== user.topFiveTvShows.length
   ) {
     revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
   }
@@ -133,6 +136,60 @@ export async function handleRemoveFromTopFiveMovies(
     variables: {
       user: { email: currentUser.email },
       movie: {
+        id,
+      },
+    },
+  });
+}
+
+export async function handleAddToTopFiveMovies(
+  currentUserEmail: string,
+  id: string
+) {
+  const currentUser = await getCurrentUser(currentUserEmail);
+  if (currentUser.topFiveMovies.length >= 5) {
+    throw new Error("Already Has 5 Movies");
+  }
+  await client.mutate({
+    mutation: AddToTopFiveMoviesMutationDocument,
+    variables: {
+      user: { email: currentUser.email },
+      movie: {
+        id,
+      },
+    },
+  });
+}
+
+export async function handleRemoveFromTopFiveTvShows(
+  currentUserEmail: string,
+  id: string
+) {
+  const currentUser = await getCurrentUser(currentUserEmail);
+  await client.mutate({
+    mutation: RemoveFromTopFiveTvShowsMutationDocument,
+    variables: {
+      user: { email: currentUser.email },
+      tvShow: {
+        id,
+      },
+    },
+  });
+}
+
+export async function handleAddToTopFiveTvShows(
+  currentUserEmail: string,
+  id: string
+) {
+  const currentUser = await getCurrentUser(currentUserEmail);
+  if (currentUser.topFiveTvShows.length >= 5) {
+    throw new Error("Already Has 5 TvShows");
+  }
+  await client.mutate({
+    mutation: AddToTopFiveTvShowsMutationDocument,
+    variables: {
+      user: { email: currentUser.email },
+      tvShow: {
         id,
       },
     },

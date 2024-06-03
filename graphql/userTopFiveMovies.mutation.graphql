@@ -11,3 +11,17 @@ mutation RemoveFromTopFiveMoviesMutation(
     }
   }
 }
+
+mutation AddToTopFiveMoviesMutation(
+  $user: FindUserInput!
+  $movie: MovieIdInput!
+) {
+  addToTopFiveMovies(user: $user, movie: $movie) {
+    movie {
+      id
+      title
+      posterPath
+      backdropPath
+    }
+  }
+}

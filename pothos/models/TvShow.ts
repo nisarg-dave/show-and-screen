@@ -14,3 +14,9 @@ export const TvShowInput = builder.inputType("TvShowInput", {
     posterPath: t.string({ required: true }),
   }),
 });
+
+export const TvShowIdInput = builder.inputType("TvShowIdInput", {
+  fields: (t) => ({
+    id: t.string({ required: true }),
+  }),
+});

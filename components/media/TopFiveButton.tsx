@@ -1,7 +1,12 @@
 "use client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "../ui/button";
-import { handleRemoveFromTopFiveMovies } from "@/app/actions";
+import {
+  handleAddToTopFiveMovies,
+  handleAddToTopFiveTvShows,
+  handleRemoveFromTopFiveMovies,
+  handleRemoveFromTopFiveTvShows,
+} from "@/app/actions";
 
 interface TopFiveButtonProps {
   isTopFive?: boolean;
@@ -31,6 +36,13 @@ function TopFiveButton({
                 description: "Removed From Top Five",
               });
             }
+            if (isTvShow) {
+              handleRemoveFromTopFiveTvShows("ndave630@gmail.com", id);
+              toast({
+                title: "Removed From Top Five",
+                description: "Removed From Top Five",
+              });
+            }
           }}
         >
           Remove From Top Five
@@ -40,10 +52,20 @@ function TopFiveButton({
           className="w-full bg-muted-foreground text-secondary"
           variant={"outline"}
           onClick={() => {
-            toast({
-              title: "Scheduled: Catch up",
-              description: "Friday, February 10, 2023 at 5:57 PM",
-            });
+            if (isMovie) {
+              handleAddToTopFiveMovies("ndave630@gmail.com", id);
+              toast({
+                title: "Added To Top Five",
+                description: "Added To Top Five",
+              });
+            }
+            if (isTvShow) {
+              handleAddToTopFiveTvShows("ndave630@gmail.com", id);
+              toast({
+                title: "Added To Top Five",
+                description: "Added To Top Five",
+              });
+            }
           }}
         >
           Add To Top Five
