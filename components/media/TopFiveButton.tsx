@@ -32,14 +32,14 @@ function TopFiveButton({
             if (isMovie) {
               handleRemoveFromTopFiveMovies("ndave630@gmail.com", id);
               toast({
-                title: "Removed From Top Five",
+                title: "Removed",
                 description: "Removed From Top Five",
               });
             }
             if (isTvShow) {
               handleRemoveFromTopFiveTvShows("ndave630@gmail.com", id);
               toast({
-                title: "Removed From Top Five",
+                title: "Removed",
                 description: "Removed From Top Five",
               });
             }
@@ -51,20 +51,40 @@ function TopFiveButton({
         <Button
           className="w-full bg-muted-foreground text-secondary"
           variant={"outline"}
-          onClick={() => {
+          onClick={async () => {
             if (isMovie) {
-              handleAddToTopFiveMovies("ndave630@gmail.com", id);
-              toast({
-                title: "Added To Top Five",
-                description: "Added To Top Five",
-              });
+              const result = await handleAddToTopFiveMovies(
+                "ndave630@gmail.com",
+                id
+              );
+              if (result) {
+                toast({
+                  title: "Added",
+                  description: "Added To Top Five",
+                });
+              } else {
+                toast({
+                  title: "Failed To Add",
+                  description: "Failed To Add To Top Five",
+                });
+              }
             }
             if (isTvShow) {
-              handleAddToTopFiveTvShows("ndave630@gmail.com", id);
-              toast({
-                title: "Added To Top Five",
-                description: "Added To Top Five",
-              });
+              const result = await handleAddToTopFiveTvShows(
+                "ndave630@gmail.com",
+                id
+              );
+              if (result) {
+                toast({
+                  title: "Added",
+                  description: "Added To Top Five",
+                });
+              } else {
+                toast({
+                  title: "Failed To Add",
+                  description: "Failed To Add To Top Five",
+                });
+              }
             }
           }}
         >

@@ -131,34 +131,44 @@ export async function handleRemoveFromTopFiveMovies(
   id: string
 ) {
   const currentUser = await getCurrentUser(currentUserEmail);
-  await client.mutate({
-    mutation: RemoveFromTopFiveMoviesMutationDocument,
-    variables: {
-      user: { email: currentUser.email },
-      movie: {
-        id,
+  try {
+    await client.mutate({
+      mutation: RemoveFromTopFiveMoviesMutationDocument,
+      variables: {
+        user: { email: currentUser.email },
+        movie: {
+          id,
+        },
       },
-    },
-  });
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function handleAddToTopFiveMovies(
   currentUserEmail: string,
   id: string
-) {
+): Promise<boolean> {
   const currentUser = await getCurrentUser(currentUserEmail);
   if (currentUser.topFiveMovies.length >= 5) {
-    throw new Error("Already Has 5 Movies");
+    return false;
   }
-  await client.mutate({
-    mutation: AddToTopFiveMoviesMutationDocument,
-    variables: {
-      user: { email: currentUser.email },
-      movie: {
-        id,
+  try {
+    await client.mutate({
+      mutation: AddToTopFiveMoviesMutationDocument,
+      variables: {
+        user: { email: currentUser.email },
+        movie: {
+          id,
+        },
       },
-    },
-  });
+    });
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 export async function handleRemoveFromTopFiveTvShows(
@@ -166,32 +176,42 @@ export async function handleRemoveFromTopFiveTvShows(
   id: string
 ) {
   const currentUser = await getCurrentUser(currentUserEmail);
-  await client.mutate({
-    mutation: RemoveFromTopFiveTvShowsMutationDocument,
-    variables: {
-      user: { email: currentUser.email },
-      tvShow: {
-        id,
+  try {
+    await client.mutate({
+      mutation: RemoveFromTopFiveTvShowsMutationDocument,
+      variables: {
+        user: { email: currentUser.email },
+        tvShow: {
+          id,
+        },
       },
-    },
-  });
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function handleAddToTopFiveTvShows(
   currentUserEmail: string,
   id: string
-) {
+): Promise<boolean> {
   const currentUser = await getCurrentUser(currentUserEmail);
   if (currentUser.topFiveTvShows.length >= 5) {
-    throw new Error("Already Has 5 TvShows");
+    return false;
   }
-  await client.mutate({
-    mutation: AddToTopFiveTvShowsMutationDocument,
-    variables: {
-      user: { email: currentUser.email },
-      tvShow: {
-        id,
+  try {
+    await client.mutate({
+      mutation: AddToTopFiveTvShowsMutationDocument,
+      variables: {
+        user: { email: currentUser.email },
+        tvShow: {
+          id,
+        },
       },
-    },
-  });
+    });
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
