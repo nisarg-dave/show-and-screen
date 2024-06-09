@@ -19,7 +19,10 @@ function NavBar() {
           >
             Watched
           </Link>
-          <Link className="font-medium text-sm ml-4 hover:underline" href="/">
+          <Link
+            className="font-medium text-sm ml-4 hover:underline"
+            href="/toWatch"
+          >
             To Watch
           </Link>
         </nav>
