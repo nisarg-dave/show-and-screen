@@ -1,0 +1,25 @@
+mutation RemoveFromTopFiveTvShowsMutation(
+  $user: FindUserInput!
+  $tvShow: TvShowIdInput!
+) {
+  removeFromTopFiveTvShows(user: $user, tvShow: $tvShow) {
+    tvShow {
+      id
+      title
+      posterPath
+    }
+  }
+}
+
+mutation AddToTopFiveTvShowsMutation(
+  $user: FindUserInput!
+  $tvShow: TvShowIdInput!
+) {
+  addToTopFiveTvShows(user: $user, tvShow: $tvShow) {
+    tvShow {
+      id
+      title
+      posterPath
+    }
+  }
+}

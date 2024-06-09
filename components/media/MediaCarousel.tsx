@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/carousel";
 import MediaCard from "./MediaCard";
 import { UserQueryQuery } from "@/graphql/generated";
+import { TmdbMovie } from "../../types/Tmdb";
 
 interface MediaCarouselProps {
   movies?:
@@ -18,23 +19,7 @@ interface MediaCarouselProps {
   isMovie?: boolean;
   isTopFiveMovie?: boolean;
   isTmdb?: boolean;
-  tmdbMedia?: {
-    adult: boolean;
-    backdrop_path: string;
-    id: number;
-    title: string;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    poster_path: string;
-    media_type: string;
-    genre_ids: number[];
-    popularity: number;
-    release_date: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-  }[];
+  tmdbMedia?: TmdbMovie[];
 }
 
 function MediaCarousel({

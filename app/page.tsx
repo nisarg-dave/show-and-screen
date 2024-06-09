@@ -1,6 +1,5 @@
-import { UserQueryDocument } from "@/graphql/generated";
-import { getClient } from "@/app/_lib/ApolloClient";
 import MediaCarousel from "@/components/media/MediaCarousel";
+import { getCurrentUser } from "./actions";
 
 async function getTrendingMovies() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
@@ -58,12 +57,7 @@ export default async function Home() {
   const nowPlayingMovies = await getNowPlayingMovies();
   const upcomingMovies = await getUpcomingMovies();
   const topRatedTvShows = await getTopRatedTvShows();
-  const client = getClient();
-  const { data } = await client.query({
-    query: UserQueryDocument,
-    variables: { user: { email: "ndave630@gmail.com" } },
-  });
-  const currentUser = data.user;
+  const currentUser = await getCurrentUser("ndave630@gmail.com");
 
   return (
     <main className="min-h-screen min-w-screen">
@@ -72,30 +66,36 @@ export default async function Home() {
           My Top 5 Movies
         </h2>
         <MediaCarousel
-          movies={currentUser.topFiveMovies}
+          movies={currentUser?.topFiveMovies}
           isMovie={true}
           isTopFiveMovie={true}
         />
         <h2 className="text-secondary font-semibold text-xl">
           My Top 5 TV Shows
         </h2>
-        <MediaCarousel tvShows={currentUser.topFiveTvShows} isMovie={false} />
+        <MediaCarousel tvShows={currentUser?.topFiveTvShows} isMovie={false} />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched Movies
         </h2>
-        <MediaCarousel movies={currentUser.watchedMovies} isMovie={true} />
+        <MediaCarousel
+          movies={currentUser?.watchedMovies.slice(0, 10)}
+          isMovie={true}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched TV Shows
         </h2>
-        <MediaCarousel tvShows={currentUser.watchedTvShows} isMovie={false} />
+        <MediaCarousel
+          tvShows={currentUser?.watchedTvShows.slice(0, 10)}
+          isMovie={false}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           Movies I Want To Watch
         </h2>
-        <MediaCarousel movies={currentUser.toWatchMovies} isMovie={true} />
+        <MediaCarousel movies={currentUser?.toWatchMovies} isMovie={true} />
         <h2 className="text-secondary font-semibold text-xl">
           TV Shows I Want To Watch
         </h2>
-        <MediaCarousel tvShows={currentUser.toWatchTvShows} isMovie={false} />
+        <MediaCarousel tvShows={currentUser?.toWatchTvShows} isMovie={false} />
         <h2 className="text-secondary font-semibold text-xl">
           Trending Movies
         </h2>

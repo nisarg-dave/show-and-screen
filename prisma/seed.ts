@@ -5,6 +5,12 @@ async function main() {
   await prisma.user.deleteMany({});
   await prisma.movie.deleteMany({});
   await prisma.tvShow.deleteMany({});
+  await prisma.userTopFiveMovies.deleteMany({});
+  await prisma.userTopFiveTvShows.deleteMany({});
+  await prisma.userWantToWatchMovies.deleteMany({});
+  await prisma.userWantToWatchTvShows.deleteMany({});
+  await prisma.userWatchedMovies.deleteMany({});
+  await prisma.userWatchedTvShows.deleteMany({});
 
   const createdUser = await prisma.user.create({
     data: {
@@ -287,87 +293,41 @@ async function main() {
     },
   });
 
+  // When you use create directly within the topFiveMovies field of the user.update mutation:
+  // You specify the movieId for each movie in your top five list.
+  // Prisma interprets this as an instruction to create a new entry in the UserTopFiveMovies table.
+  // Prisma automatically sets the userId value based on the where clause in the user update (email: "ndave630@gmail.com"). This ensures the association is created between the specific user and the movies you're referencing.
   await prisma.user.update({
     where: { email: "ndave630@gmail.com" },
     data: {
       topFiveMovies: {
-        connectOrCreate: topFiveMoviesArr.map((movie) => ({
-          where: {
-            // Placing them inside the composite key
-            userId_movieId: {
-              userId: createdUser.id,
-              movieId: movie.id,
-            },
-          },
-          create: {
-            movieId: movie.id,
-          },
+        create: topFiveMoviesArr.map((movie) => ({
+          movieId: movie.id,
         })),
       },
       topFiveTvShows: {
-        connectOrCreate: topFiveTvShowsArr.map((tvShow) => ({
-          where: {
-            userId_tvShowId: {
-              userId: createdUser.id,
-              tvShowId: tvShow.id,
-            },
-          },
-          create: {
-            tvShowId: tvShow.id,
-          },
+        create: topFiveTvShowsArr.map((tvShow) => ({
+          tvShowId: tvShow.id,
         })),
       },
       watchedMovies: {
-        connectOrCreate: watchedMoviesArr.map((watchedMovie) => ({
-          where: {
-            userId_movieId: {
-              userId: createdUser.id,
-              movieId: watchedMovie.id,
-            },
-          },
-          create: {
-            movieId: watchedMovie.id,
-          },
+        create: watchedMoviesArr.map((watchedMovie) => ({
+          movieId: watchedMovie.id,
         })),
       },
       watchedTvShows: {
-        connectOrCreate: watchedTvShowsArr.map((watchedTvShow) => ({
-          where: {
-            userId_tvShowId: {
-              userId: createdUser.id,
-              tvShowId: watchedTvShow.id,
-            },
-          },
-          create: {
-            tvShowId: watchedTvShow.id,
-          },
+        create: watchedTvShowsArr.map((watchedTvShow) => ({
+          tvShowId: watchedTvShow.id,
         })),
       },
       toWatchMovies: {
-        connectOrCreate: toWatchMoviesArr.map((toWatchMovie) => ({
-          where: {
-            // Placing them inside the composite key
-            userId_movieId: {
-              userId: createdUser.id,
-              movieId: toWatchMovie.id,
-            },
-          },
-          create: {
-            movieId: toWatchMovie.id,
-          },
+        create: toWatchMoviesArr.map((toWatchMovie) => ({
+          movieId: toWatchMovie.id,
         })),
       },
       toWatchTvShows: {
-        connectOrCreate: toWatchTvShowsArr.map((toWatchTvShow) => ({
-          where: {
-            userId_tvShowId: {
-              userId: createdUser.id,
-              tvShowId: toWatchTvShow.id,
-            },
-          },
-          create: {
-            tvShowId: toWatchTvShow.id,
-          },
+        create: toWatchTvShowsArr.map((toWatchTvShow) => ({
+          tvShowId: toWatchTvShow.id,
         })),
       },
     },

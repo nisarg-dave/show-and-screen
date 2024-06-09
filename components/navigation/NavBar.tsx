@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 
 function NavBar() {
   return (
-    <header className="bg-primary px-4 h-14 sticky z-30 top-0">
+    <header className="bg-primary px-4 h-14 sticky z-30 top-0 text-secondary">
       <div className="flex justify-between pt-3">
         <Link className="text-xl font-semibold cursor-pointer" href="/">
           <span>Show & Screen</span>
@@ -13,7 +13,10 @@ function NavBar() {
           <Button className="h-8 bg-muted-foreground" variant="outline">
             Quick Action
           </Button>
-          <Link className="font-medium text-sm ml-4 hover:underline" href="/">
+          <Link
+            className="font-medium text-sm ml-4 hover:underline"
+            href="/watched"
+          >
             Watched
           </Link>
           <Link className="font-medium text-sm ml-4 hover:underline" href="/">
