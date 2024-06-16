@@ -10,6 +10,8 @@ import {
   RemoveFromTopFiveTvShowsMutationDocument,
   UserQueryDocument,
   UserQueryQuery,
+  AddToWatchMoviesMutationDocument,
+  AddToWatchTvShowsMutationDocument,
 } from "@/graphql/generated";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import { revalidatePath } from "next/cache";
@@ -78,11 +80,23 @@ export async function searchTvShow(input: string) {
   return searchedTvShows.results;
 }
 
-export async function handleAddToWatchedMovies(movie: TmdbMovie) {
+export async function getCurrentUser(email: string) {
+  const { data } = await client.query({
+    query: UserQueryDocument,
+    variables: { user: { email } },
+    fetchPolicy: "network-only", // Doesn't check cache before making a network request
+  });
+  return data.user;
+}
+
+export async function handleAddToWatchedMovies(
+  movie: TmdbMovie,
+  currentUserEmail: string
+) {
   await client.mutate({
     mutation: AddToWatchedMoviesMutationDocument,
     variables: {
-      user: { email: "ndave630@gmail.com" },
+      user: { email: currentUserEmail },
       movie: {
         title: movie.title,
         posterPath: movie.poster_path,
@@ -92,11 +106,14 @@ export async function handleAddToWatchedMovies(movie: TmdbMovie) {
   });
 }
 
-export async function handleAddToWatchedTvShows(tvShow: TmdbTvShow) {
+export async function handleAddToWatchedTvShows(
+  tvShow: TmdbTvShow,
+  currentUserEmail: string
+) {
   await client.mutate({
     mutation: AddToWatchedTvShowsMutationDocument,
     variables: {
-      user: { email: "ndave630@gmail.com" },
+      user: { email: currentUserEmail },
       tvShow: {
         title: tvShow.name,
         posterPath: tvShow.poster_path,
@@ -105,25 +122,18 @@ export async function handleAddToWatchedTvShows(tvShow: TmdbTvShow) {
   });
 }
 
-export async function checkWatchedChanged(currentUser: UserQueryQuery["user"]) {
+export async function checkChanged(currentUser: UserQueryQuery["user"]) {
   const user = await getCurrentUser(currentUser.email);
   if (
     currentUser.watchedMovies.length !== user.watchedMovies.length ||
     currentUser.watchedTvShows.length !== user.watchedTvShows.length ||
     currentUser.topFiveMovies.length !== user.topFiveMovies.length ||
-    currentUser.topFiveTvShows.length !== user.topFiveTvShows.length
+    currentUser.topFiveTvShows.length !== user.topFiveTvShows.length ||
+    currentUser.toWatchMovies.length !== user.toWatchMovies.length ||
+    currentUser.toWatchTvShows.length !== user.toWatchTvShows.length
   ) {
     revalidatePath("/"); // This will purge the Client-side Router Cache for all paths
   }
-}
-
-export async function getCurrentUser(email: string) {
-  const { data } = await client.query({
-    query: UserQueryDocument,
-    variables: { user: { email } },
-    fetchPolicy: "network-only", // Doesn't check cache before making a network request
-  });
-  return data.user;
 }
 
 export async function handleRemoveFromTopFiveMovies(
@@ -215,3 +225,40 @@ export async function handleAddToTopFiveTvShows(
     return false;
   }
 }
+
+export async function handleAddToWatchMovies(
+  movie: TmdbMovie,
+  currentUserEmail: string
+) {
+  await client.mutate({
+    mutation: AddToWatchMoviesMutationDocument,
+    variables: {
+      user: { email: currentUserEmail },
+      movie: {
+        title: movie.title,
+        posterPath: movie.poster_path,
+        backdropPath: movie.backdrop_path,
+      },
+    },
+  });
+}
+
+export async function handleAddToWatchTvShows(
+  tvShow: TmdbTvShow,
+  currentUserEmail: string
+) {
+  await client.mutate({
+    mutation: AddToWatchTvShowsMutationDocument,
+    variables: {
+      user: { email: currentUserEmail },
+      tvShow: {
+        title: tvShow.name,
+        posterPath: tvShow.poster_path,
+      },
+    },
+  });
+}
+
+export async function handleRemoveFromToWatchMovies() {}
+
+export async function handleRemoveFromToWatchTvShows() {}

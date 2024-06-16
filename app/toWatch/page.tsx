@@ -3,8 +3,9 @@ import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaCard from "@/components/media/MediaCard";
 
-import { checkWatchedChanged, getCurrentUser } from "../actions";
+import { checkChanged, getCurrentUser } from "../actions";
 import { Suspense } from "react";
+import RefreshCache from "../_lib/refresh-cache";
 
 async function ToWatchPage() {
   const currentUser = await getCurrentUser("ndave630@gmail.com");
@@ -14,6 +15,7 @@ async function ToWatchPage() {
       <div className="mt-6">
         <SearchBar />
       </div>
+      <RefreshCache check={checkChanged} currentUser={currentUser} />
       <div className="mt-5">
         <Tabs defaultValue="To Watch Movies" className="w-[80vw]">
           <TabsList className="grid w-full grid-cols-2 bg-muted-foreground">

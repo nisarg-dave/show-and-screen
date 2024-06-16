@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import DropDown from "./DropDown";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import {
+  handleAddToWatchMovies,
+  handleAddToWatchTvShows,
   handleAddToWatchedMovies,
   handleAddToWatchedTvShows,
 } from "../../app/actions";
@@ -19,8 +21,9 @@ function SearchBar() {
     setOpen(!open);
     setInput(movie.title);
     if (pathname === "/watched") {
-      handleAddToWatchedMovies(movie);
+      handleAddToWatchedMovies(movie, "ndave630@gmail.com");
     } else if (pathname === "/toWatch") {
+      handleAddToWatchMovies(movie, "ndave630@gmail.com");
     }
   };
 
@@ -28,8 +31,9 @@ function SearchBar() {
     setOpen(!open);
     setInput(tvShow.name);
     if (pathname === "/watched") {
-      handleAddToWatchedTvShows(tvShow);
+      handleAddToWatchedTvShows(tvShow, "ndave630@gmail.com");
     } else if (pathname === "/toWatch") {
+      handleAddToWatchTvShows(tvShow, "ndave630@gmail.com");
     }
   };
 
