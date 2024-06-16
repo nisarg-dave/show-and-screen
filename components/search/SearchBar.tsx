@@ -8,21 +8,29 @@ import {
   handleAddToWatchedMovies,
   handleAddToWatchedTvShows,
 } from "../../app/actions";
+import { usePathname } from "next/navigation";
 
 function SearchBar() {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleSelectMovie = (movie: TmdbMovie) => {
     setOpen(!open);
     setInput(movie.title);
-    handleAddToWatchedMovies(movie);
+    if (pathname === "/watched") {
+      handleAddToWatchedMovies(movie);
+    } else if (pathname === "/toWatch") {
+    }
   };
 
   const handleSelectTvShow = (tvShow: TmdbTvShow) => {
     setOpen(!open);
     setInput(tvShow.name);
-    handleAddToWatchedTvShows(tvShow);
+    if (pathname === "/watched") {
+      handleAddToWatchedTvShows(tvShow);
+    } else if (pathname === "/toWatch") {
+    }
   };
 
   return (
