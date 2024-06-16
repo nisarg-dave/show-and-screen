@@ -1,25 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Tv2 } from "lucide-react";
 import TopFiveButton from "./TopFiveButton";
+import RemoveFromToWatchButton from "./RemoveFromToWatchButton";
 
 interface MediaCardProps {
   imgUrl: string;
   isTmdb?: boolean;
   isTopFive?: boolean;
-  isWatched?: boolean;
+  isWatchedPage?: boolean;
   id?: string;
   isMovie?: boolean;
   isTvShow?: boolean;
+  isToWatchPage?: boolean;
 }
 
 function MediaCard({
   imgUrl,
   isTmdb,
   isTopFive,
-  isWatched,
+  isWatchedPage,
   id,
   isMovie,
   isTvShow,
+  isToWatchPage,
 }: MediaCardProps) {
   return (
     // The relative positioning on the .Card creates a reference point for absolute positioning of its child elements.
@@ -49,9 +52,18 @@ function MediaCard({
             />
           </div>
         ) : null}
-        {isWatched ? (
+        {isWatchedPage ? (
           <div className="mt-2">
             <TopFiveButton id={id!} isMovie={isMovie} isTvShow={isTvShow} />
+          </div>
+        ) : null}
+        {isToWatchPage ? (
+          <div className="mt-2">
+            <RemoveFromToWatchButton
+              id={id!}
+              isMovie={isMovie}
+              isTvShow={isTvShow}
+            />
           </div>
         ) : null}
       </CardContent>

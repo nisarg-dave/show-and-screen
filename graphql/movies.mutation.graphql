@@ -14,13 +14,6 @@ mutation AddToWatchedMoviesMutation(
         backdropPath
       }
     }
-    topFiveTvShows {
-      tvShow {
-        id
-        title
-        posterPath
-      }
-    }
     watchedMovies {
       movie {
         id
@@ -29,26 +22,20 @@ mutation AddToWatchedMoviesMutation(
         backdropPath
       }
     }
-    watchedTvShows {
-      tvShow {
-        id
-        title
-        posterPath
-      }
-    }
+  }
+}
+
+mutation AddToWatchMoviesMutation($user: FindUserInput!, $movie: MovieInput!) {
+  addToWatchMovies(user: $user, movie: $movie) {
+    id
+    name
+    email
     toWatchMovies {
       movie {
         id
         title
         posterPath
         backdropPath
-      }
-    }
-    toWatchTvShows {
-      tvShow {
-        id
-        title
-        posterPath
       }
     }
   }

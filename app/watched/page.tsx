@@ -2,8 +2,8 @@ import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaCard from "@/components/media/MediaCard";
 
-import RefreshCache from "./refresh-cache";
-import { checkWatchedChanged, getCurrentUser } from "../actions";
+import RefreshCache from "../_lib/refresh-cache";
+import { checkChanged, getCurrentUser } from "../actions";
 import { Suspense } from "react";
 
 async function WatchedPage() {
@@ -20,7 +20,7 @@ async function WatchedPage() {
       <div className="mt-6">
         <SearchBar />
       </div>
-      <RefreshCache check={checkWatchedChanged} currentUser={currentUser} />
+      <RefreshCache check={checkChanged} currentUser={currentUser} />
       <div className="mt-5">
         <Tabs defaultValue="Watched Movies" className="w-[80vw]">
           <TabsList className="grid w-full grid-cols-2 bg-muted-foreground">
@@ -51,7 +51,7 @@ async function WatchedPage() {
                     <MediaCard
                       key={watchedMovie.movie.id}
                       imgUrl={watchedMovie.movie.posterPath}
-                      isWatched={true}
+                      isWatchedPage={true}
                       isMovie={true}
                       id={watchedMovie.movie.id}
                     />
@@ -80,7 +80,7 @@ async function WatchedPage() {
                     <MediaCard
                       key={watchedTvShow.tvShow.id}
                       imgUrl={watchedTvShow.tvShow.posterPath}
-                      isWatched={true}
+                      isWatchedPage={true}
                       isTvShow={true}
                       id={watchedTvShow.tvShow.id}
                     />
