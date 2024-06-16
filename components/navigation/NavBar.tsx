@@ -9,10 +9,7 @@ function NavBar() {
         <Link className="text-xl font-semibold cursor-pointer" href="/">
           <span>Show & Screen</span>
         </Link>
-        <nav className="">
-          <Button className="h-8 bg-muted-foreground" variant="outline">
-            Quick Action
-          </Button>
+        <nav className="mt-1">
           <Link
             className="font-medium text-sm ml-4 hover:underline"
             href="/watched"

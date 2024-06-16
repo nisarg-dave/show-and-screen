@@ -91,11 +91,17 @@ export default async function Home() {
         <h2 className="text-secondary font-semibold text-xl">
           Movies I Want To Watch
         </h2>
-        <MediaCarousel movies={currentUser?.toWatchMovies} isMovie={true} />
+        <MediaCarousel
+          movies={currentUser?.toWatchMovies.slice(0, 10)}
+          isMovie={true}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           TV Shows I Want To Watch
         </h2>
-        <MediaCarousel tvShows={currentUser?.toWatchTvShows} isMovie={false} />
+        <MediaCarousel
+          tvShows={currentUser?.toWatchTvShows.slice(0, 10)}
+          isMovie={false}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           Trending Movies
         </h2>
