@@ -51,7 +51,7 @@ async function WatchedPage() {
                     <MediaCard
                       key={watchedMovie.movie.id}
                       imgUrl={watchedMovie.movie.posterPath}
-                      isWatched={true}
+                      isWatchedPage={true}
                       isMovie={true}
                       id={watchedMovie.movie.id}
                     />
@@ -80,7 +80,7 @@ async function WatchedPage() {
                     <MediaCard
                       key={watchedTvShow.tvShow.id}
                       imgUrl={watchedTvShow.tvShow.posterPath}
-                      isWatched={true}
+                      isWatchedPage={true}
                       isTvShow={true}
                       id={watchedTvShow.tvShow.id}
                     />

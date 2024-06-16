@@ -1,0 +1,10 @@
+mutation RemoveFromToWatchTvShowsMutation(
+  $user: FindUserInput!
+  $tvShow: TvShowIdInput!
+) {
+  removeFromWantToWatchTvShows(user: $user, tvShow: $tvShow) {
+    id
+    title
+    posterPath
+  }
+}

@@ -12,6 +12,8 @@ import {
   UserQueryQuery,
   AddToWatchMoviesMutationDocument,
   AddToWatchTvShowsMutationDocument,
+  RemoveFromToWatchMoviesMutationDocument,
+  RemoveFromToWatchTvShowsMutationDocument,
 } from "@/graphql/generated";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import { revalidatePath } from "next/cache";
@@ -259,6 +261,69 @@ export async function handleAddToWatchTvShows(
   });
 }
 
-export async function handleRemoveFromToWatchMovies() {}
+export async function handleRemoveFromToWatchMovies(
+  id: string,
+  currentUserEmail: string
+): Promise<boolean> {
+  try {
+    const removedMovie = await client.mutate({
+      mutation: RemoveFromToWatchMoviesMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        movie: {
+          id,
+        },
+      },
+    });
+    await client.mutate({
+      mutation: AddToWatchedMoviesMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        movie: {
+          title: removedMovie.data!.removeFromWantToWatchMovies.title,
+          posterPath: removedMovie.data!.removeFromWantToWatchMovies.posterPath,
+          backdropPath:
+            removedMovie.data!.removeFromWantToWatchMovies.backdropPath,
+        },
+      },
+    });
+    revalidatePath("/");
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
 
-export async function handleRemoveFromToWatchTvShows() {}
+export async function handleRemoveFromToWatchTvShows(
+  id: string,
+  currentUserEmail: string
+) {
+  try {
+    const removedTvShow = await client.mutate({
+      mutation: RemoveFromToWatchTvShowsMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        tvShow: {
+          id,
+        },
+      },
+    });
+    await client.mutate({
+      mutation: AddToWatchedTvShowsMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        tvShow: {
+          title: removedTvShow.data!.removeFromWantToWatchTvShows.title,
+          posterPath:
+            removedTvShow.data!.removeFromWantToWatchTvShows.posterPath,
+        },
+      },
+    });
+    revalidatePath("/");
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}

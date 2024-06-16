@@ -37,6 +37,9 @@ async function ToWatchPage() {
                   <MediaCard
                     key={toWatchMovie.movie.id}
                     imgUrl={toWatchMovie.movie.posterPath}
+                    isToWatchPage={true}
+                    isMovie={true}
+                    id={toWatchMovie.movie.id}
                   />
                 ))}
               </div>
@@ -53,6 +56,9 @@ async function ToWatchPage() {
                   <MediaCard
                     key={toWatchTvShow.tvShow.id}
                     imgUrl={toWatchTvShow.tvShow.posterPath}
+                    isToWatchPage={true}
+                    isTvShow={true}
+                    id={toWatchTvShow.tvShow.id}
                   />
                 ))}
               </div>

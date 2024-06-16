@@ -1,0 +1,11 @@
+mutation RemoveFromToWatchMoviesMutation(
+  $user: FindUserInput!
+  $movie: MovieIdInput!
+) {
+  removeFromWantToWatchMovies(user: $user, movie: $movie) {
+    id
+    title
+    posterPath
+    backdropPath
+  }
+}
