@@ -2,6 +2,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star, Tv2 } from "lucide-react";
 import TopFiveButton from "./TopFiveButton";
 import RemoveFromToWatchButton from "./RemoveFromToWatchButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface MediaCardProps {
   imgUrl: string;
@@ -37,8 +43,26 @@ function MediaCard({
         {isTmdb ? (
           <div className="absolute top-0 left-0 flex justify-center items-center h-full w-full cursor-pointer">
             <div className="flex gap-x-10">
-              <Star className="text-muted-foreground hover:text-secondary w-9 h-9" />
-              <Tv2 className="text-muted-foreground hover:text-secondary w-9 h-9" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Star className="text-muted-foreground hover:text-secondary w-9 h-9" />
+                  </TooltipTrigger>
+                  <TooltipContent className="text-sm">
+                    Want to watch?
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Tv2 className="text-muted-foreground hover:text-secondary w-9 h-9" />
+                  </TooltipTrigger>
+                  <TooltipContent className="text-sm">
+                    Already watched.
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         ) : null}
