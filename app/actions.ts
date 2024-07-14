@@ -92,36 +92,48 @@ export async function getCurrentUser(email: string) {
 }
 
 export async function handleAddToWatchedMovies(
-  movie: TmdbMovie,
+  movie: Partial<TmdbMovie>,
   currentUserEmail: string
-) {
-  await client.mutate({
-    mutation: AddToWatchedMoviesMutationDocument,
-    variables: {
-      user: { email: currentUserEmail },
-      movie: {
-        title: movie.title,
-        posterPath: movie.poster_path,
-        backdropPath: movie.backdrop_path,
+): Promise<boolean> {
+  try {
+    await client.mutate({
+      mutation: AddToWatchedMoviesMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        movie: {
+          title: movie.title!,
+          posterPath: movie.poster_path!,
+          backdropPath: movie.backdrop_path!,
+        },
       },
-    },
-  });
+    });
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 export async function handleAddToWatchedTvShows(
-  tvShow: TmdbTvShow,
+  tvShow: Partial<TmdbTvShow>,
   currentUserEmail: string
-) {
-  await client.mutate({
-    mutation: AddToWatchedTvShowsMutationDocument,
-    variables: {
-      user: { email: currentUserEmail },
-      tvShow: {
-        title: tvShow.name,
-        posterPath: tvShow.poster_path,
+): Promise<boolean> {
+  try {
+    await client.mutate({
+      mutation: AddToWatchedTvShowsMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        tvShow: {
+          title: tvShow.name!,
+          posterPath: tvShow.poster_path!,
+        },
       },
-    },
-  });
+    });
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 export async function checkChanged(currentUser: UserQueryQuery["user"]) {
@@ -229,36 +241,48 @@ export async function handleAddToTopFiveTvShows(
 }
 
 export async function handleAddToWatchMovies(
-  movie: TmdbMovie,
+  movie: Partial<TmdbMovie>,
   currentUserEmail: string
-) {
-  await client.mutate({
-    mutation: AddToWatchMoviesMutationDocument,
-    variables: {
-      user: { email: currentUserEmail },
-      movie: {
-        title: movie.title,
-        posterPath: movie.poster_path,
-        backdropPath: movie.backdrop_path,
+): Promise<boolean> {
+  try {
+    await client.mutate({
+      mutation: AddToWatchMoviesMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        movie: {
+          title: movie.title!,
+          posterPath: movie.poster_path!,
+          backdropPath: movie.backdrop_path!,
+        },
       },
-    },
-  });
+    });
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 export async function handleAddToWatchTvShows(
-  tvShow: TmdbTvShow,
+  tvShow: Partial<TmdbTvShow>,
   currentUserEmail: string
-) {
-  await client.mutate({
-    mutation: AddToWatchTvShowsMutationDocument,
-    variables: {
-      user: { email: currentUserEmail },
-      tvShow: {
-        title: tvShow.name,
-        posterPath: tvShow.poster_path,
+): Promise<boolean> {
+  try {
+    await client.mutate({
+      mutation: AddToWatchTvShowsMutationDocument,
+      variables: {
+        user: { email: currentUserEmail },
+        tvShow: {
+          title: tvShow.name!,
+          posterPath: tvShow.poster_path!,
+        },
       },
-    },
-  });
+    });
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 export async function handleRemoveFromToWatchMovies(
@@ -298,7 +322,7 @@ export async function handleRemoveFromToWatchMovies(
 export async function handleRemoveFromToWatchTvShows(
   id: string,
   currentUserEmail: string
-) {
+): Promise<boolean> {
   try {
     const removedTvShow = await client.mutate({
       mutation: RemoveFromToWatchTvShowsMutationDocument,

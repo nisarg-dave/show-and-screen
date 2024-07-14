@@ -1,5 +1,6 @@
 import MediaCarousel from "@/components/media/MediaCarousel";
-import { getCurrentUser } from "./actions";
+import { checkChanged, getCurrentUser } from "./actions";
+import RefreshCache from "./_lib/refresh-cache";
 
 async function getTrendingMovies() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
@@ -59,12 +60,9 @@ export default async function Home() {
   const topRatedTvShows = await getTopRatedTvShows();
   const currentUser = await getCurrentUser("ndave630@gmail.com");
 
-  const watchedMoviesReversed = currentUser?.watchedMovies
-    .toReversed()
-    .slice(0, 10);
-
   return (
     <main className="min-h-screen min-w-screen">
+      <RefreshCache check={checkChanged} currentUser={currentUser} />
       <div className="mx-4 my-4">
         <h2 className="text-secondary font-semibold text-xl">
           My Top 5 Movies
@@ -109,23 +107,43 @@ export default async function Home() {
         <h2 className="text-secondary font-semibold text-xl">
           Trending Movies
         </h2>
-        <MediaCarousel tmdbMedia={trendingMovies.results} isTmdb={true} />
+        <MediaCarousel
+          tmdbMedia={trendingMovies.results}
+          isTmdb={true}
+          isTmdbMovie={true}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           Trending TV Shows
         </h2>
-        <MediaCarousel tmdbMedia={trendingTvShows.results} isTmdb={true} />
+        <MediaCarousel
+          tmdbMedia={trendingTvShows.results}
+          isTmdb={true}
+          isTmdbMovie={false}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           Now Playing Movies
         </h2>
-        <MediaCarousel tmdbMedia={nowPlayingMovies.results} isTmdb={true} />
+        <MediaCarousel
+          tmdbMedia={nowPlayingMovies.results}
+          isTmdb={true}
+          isTmdbMovie={true}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           Upcoming Movies
         </h2>
-        <MediaCarousel tmdbMedia={upcomingMovies.results} isTmdb={true} />
+        <MediaCarousel
+          tmdbMedia={upcomingMovies.results}
+          isTmdb={true}
+          isTmdbMovie={true}
+        />
         <h2 className="text-secondary font-semibold text-xl">
           Top Rated TV Shows
         </h2>
-        <MediaCarousel tmdbMedia={topRatedTvShows.results} isTmdb={true} />
+        <MediaCarousel
+          tmdbMedia={topRatedTvShows.results}
+          isTmdb={true}
+          isTmdbMovie={false}
+        />
       </div>
     </main>
   );

@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/carousel";
 import MediaCard from "./MediaCard";
 import { UserQueryQuery } from "@/graphql/generated";
-import { TmdbMovie } from "../../types/Tmdb";
+import { TmdbMovie, TmdbTvShow } from "../../types/Tmdb";
 
 interface MediaCarouselProps {
   movies?:
@@ -19,7 +19,8 @@ interface MediaCarouselProps {
   isMovie?: boolean;
   isTopFiveMovie?: boolean;
   isTmdb?: boolean;
-  tmdbMedia?: TmdbMovie[];
+  isTmdbMovie?: boolean;
+  tmdbMedia?: TmdbMovie[] | TmdbTvShow[];
 }
 
 function MediaCarousel({
@@ -28,6 +29,7 @@ function MediaCarousel({
   isMovie,
   isTopFiveMovie,
   isTmdb,
+  isTmdbMovie,
   tmdbMedia,
 }: MediaCarouselProps) {
   return (
@@ -46,7 +48,21 @@ function MediaCarousel({
                   key={tmdbMediaItem.id}
                   className="md:basis-1/3 lg:basis-1/5"
                 >
-                  <MediaCard imgUrl={tmdbMediaItem.poster_path} isTmdb={true} />
+                  {isTmdbMovie ? (
+                    <MediaCard
+                      imgUrl={tmdbMediaItem.poster_path}
+                      isTmdb={true}
+                      isTmdbMovie={isTmdbMovie}
+                      tmdbMediaMovie={tmdbMediaItem}
+                    />
+                  ) : (
+                    <MediaCard
+                      imgUrl={tmdbMediaItem.poster_path}
+                      isTmdb={true}
+                      isTmdbMovie={isTmdbMovie}
+                      tmdbMediaTvShow={tmdbMediaItem}
+                    />
+                  )}
                 </CarouselItem>
               ))}
             </>
