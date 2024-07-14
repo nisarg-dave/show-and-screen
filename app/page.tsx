@@ -59,6 +59,10 @@ export default async function Home() {
   const topRatedTvShows = await getTopRatedTvShows();
   const currentUser = await getCurrentUser("ndave630@gmail.com");
 
+  const watchedMoviesReversed = currentUser?.watchedMovies
+    .toReversed()
+    .slice(0, 10);
+
   return (
     <main className="min-h-screen min-w-screen">
       <div className="mx-4 my-4">
@@ -78,28 +82,28 @@ export default async function Home() {
           My Watched Movies
         </h2>
         <MediaCarousel
-          movies={currentUser?.watchedMovies.slice(0, 10)}
+          movies={currentUser?.watchedMovies.toReversed().slice(0, 10)}
           isMovie={true}
         />
         <h2 className="text-secondary font-semibold text-xl">
           My Watched TV Shows
         </h2>
         <MediaCarousel
-          tvShows={currentUser?.watchedTvShows.slice(0, 10)}
+          tvShows={currentUser?.watchedTvShows.toReversed().slice(0, 10)}
           isMovie={false}
         />
         <h2 className="text-secondary font-semibold text-xl">
           Movies I Want To Watch
         </h2>
         <MediaCarousel
-          movies={currentUser?.toWatchMovies.slice(0, 10)}
+          movies={currentUser?.toWatchMovies.toReversed().slice(0, 10)}
           isMovie={true}
         />
         <h2 className="text-secondary font-semibold text-xl">
           TV Shows I Want To Watch
         </h2>
         <MediaCarousel
-          tvShows={currentUser?.toWatchTvShows.slice(0, 10)}
+          tvShows={currentUser?.toWatchTvShows.toReversed().slice(0, 10)}
           isMovie={false}
         />
         <h2 className="text-secondary font-semibold text-xl">
