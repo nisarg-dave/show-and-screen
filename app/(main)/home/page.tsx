@@ -1,6 +1,6 @@
 import MediaCarousel from "@/components/media/MediaCarousel";
-import { checkChanged, getCurrentUser } from "./actions";
-import RefreshCache from "./_lib/refresh-cache";
+import { checkChanged, getCurrentUser } from "../../actions";
+import RefreshCache from "../../_lib/refresh-cache";
 
 async function getTrendingMovies() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/week", {

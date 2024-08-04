@@ -2,8 +2,8 @@ import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaCard from "@/components/media/MediaCard";
 
-import RefreshCache from "../_lib/refresh-cache";
-import { checkChanged, getCurrentUser } from "../actions";
+import RefreshCache from "../../_lib/refresh-cache";
+import { checkChanged, getCurrentUser } from "../../actions";
 import { Suspense } from "react";
 
 async function WatchedPage() {

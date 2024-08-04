@@ -3,9 +3,9 @@ import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaCard from "@/components/media/MediaCard";
 
-import { checkChanged, getCurrentUser } from "../actions";
+import { checkChanged, getCurrentUser } from "../../actions";
 import { Suspense } from "react";
-import RefreshCache from "../_lib/refresh-cache";
+import RefreshCache from "../../_lib/refresh-cache";
 
 async function ToWatchPage() {
   const currentUser = await getCurrentUser("ndave630@gmail.com");
