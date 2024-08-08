@@ -61,7 +61,7 @@ export default async function Home() {
   const currentUser = await getCurrentUser("ndave630@gmail.com");
 
   return (
-    <main className="min-h-screen min-w-screen">
+    <main className="min-h-screen">
       <RefreshCache check={checkChanged} currentUser={currentUser} />
       <div className="mx-4 my-4">
         <h2 className="text-secondary font-semibold text-xl">
