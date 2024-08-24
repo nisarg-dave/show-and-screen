@@ -1,8 +1,12 @@
+"use client";
+
+import LogInForm from "@/components/authentication/LoginForm";
 import SignUpForm from "@/components/authentication/SignUpForm";
 import Image from "next/image";
-import React from "react";
+import { useState } from "react";
 
 function page() {
+  const [signup, setSignup] = useState(true);
   return (
     <div className="text-secondary">
       <div className="flex justify-center mb-2 gap-2">
@@ -11,7 +15,11 @@ function page() {
           Show and Screen
         </h1>
       </div>
-      <SignUpForm />
+      {signup ? (
+        <SignUpForm setSignup={setSignup} />
+      ) : (
+        <LogInForm setSignup={setSignup} />
+      )}
     </div>
   );
 }
