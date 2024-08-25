@@ -355,12 +355,7 @@ export async function handleRemoveFromToWatchTvShows(
   }
 }
 
-// Protected routes
-export async function loginRequiredServer() {
+export async function getSession() {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return redirect("/signup");
-  } else {
-    return redirect("/home");
-  }
+  return session;
 }
