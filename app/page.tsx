@@ -1,15 +1,14 @@
 "use client";
+
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { loginRequiredServer } from "./actions";
 
 function Index() {
-  const router = useRouter();
   useEffect(() => {
-    if (true) {
-      router.push("/signup");
-    } else {
-      router.push("/home");
-    }
+    const checkSession = async () => {
+      await loginRequiredServer();
+    };
+    checkSession();
   }, []);
 }
 
