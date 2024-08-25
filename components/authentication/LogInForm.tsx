@@ -1,6 +1,4 @@
-"use client";
-import { Button } from "../ui/button";
-import Image from "next/image";
+import { GoogleAuthButton } from "./AuthButtons";
 import AuthenticationForm from "./AuthenticationForm";
 
 interface LogInFormProps {
@@ -22,13 +20,7 @@ function LogInForm({ setSignup }: LogInFormProps) {
           <span className="bg-background px-2 text-muted-foreground">Or</span>
         </div>
       </div>
-      <Button
-        type="submit"
-        className="w-full bg-card-foreground hover:bg-purple-800 mt-6"
-      >
-        <Image src="/Google.svg" alt="Google" width={40} height={40} />
-        <p className="ml-2">Continue with Google</p>
-      </Button>
+      <GoogleAuthButton />
       <div className="flex justify-end mt-9">
         <span
           className="cursor-pointer hover:underline text-sm"
