@@ -24,12 +24,12 @@ export function GoogleAuthButton() {
 
 export function LogOutButton() {
   return (
-    <DropdownMenuShortcut>
+    <DropdownMenuShortcut className="flex">
       <LogOut className="mr-2 h-4 w-4" />
       <span
         onClick={() => signOut({ callbackUrl: `http://localhost:3000/signup` })}
       >
-        Log out
+        Log Out
       </span>
       <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
     </DropdownMenuShortcut>

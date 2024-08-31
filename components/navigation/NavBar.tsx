@@ -36,13 +36,16 @@ async function NavBar() {
           </nav>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Avatar>
+              <Avatar className="h-8 w-8">
                 <AvatarImage src={session?.user?.image!} />
                 <AvatarFallback>{session?.user?.name}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
+            <DropdownMenuContent className="bg-muted-foreground">
+              <DropdownMenuItem className="flex justify-center">
+                {session?.user?.name}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <LogOutButton />
               </DropdownMenuItem>
             </DropdownMenuContent>
