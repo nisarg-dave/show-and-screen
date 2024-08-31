@@ -12,6 +12,8 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { signUpUser } from "@/app/actions";
+import { signIn } from "next-auth/react";
 
 interface AuthenticationFormProps {
   signup?: boolean;
@@ -35,8 +37,19 @@ function AuthenticationForm({ signup }: AuthenticationFormProps) {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (signup) {
+      await signUpUser(values.email, values.username, values.password);
+      await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+      });
+    } else {
+      await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+      });
+    }
   };
 
   return (

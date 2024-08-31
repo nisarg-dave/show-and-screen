@@ -2,6 +2,7 @@ import { builder } from "../builder";
 import { prisma } from "../db";
 import { MovieInput } from "./Movie";
 import { TvShowInput } from "./TvShow";
+import bcrypt from "bcryptjs";
 
 builder.prismaObject("User", {
   fields: (t) => ({
@@ -20,6 +21,14 @@ builder.prismaObject("User", {
 export const FindUserInput = builder.inputType("FindUserInput", {
   fields: (t) => ({
     email: t.string({ required: true }),
+  }),
+});
+
+const SignUpInput = builder.inputType("SignUpInput", {
+  fields: (t) => ({
+    email: t.string({ required: true }),
+    username: t.string({ required: true }),
+    password: t.string({ required: true }),
   }),
 });
 
@@ -46,6 +55,25 @@ builder.queryFields((t) => ({
 }));
 
 builder.mutationFields((t) => ({
+  signUp: t.prismaField({
+    type: "User",
+    args: {
+      input: t.arg({
+        type: SignUpInput,
+        required: true,
+      }),
+    },
+    resolve: async (query, parent, args) => {
+      const user = await prisma.user.create({
+        data: {
+          name: args.input.username,
+          email: args.input.email,
+          password: await bcrypt.hash(args.input.password, 10),
+        },
+      });
+      return user;
+    },
+  }),
   addToWatchedMovies: t.prismaField({
     type: "User",
     args: {

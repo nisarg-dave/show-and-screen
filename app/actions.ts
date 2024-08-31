@@ -14,6 +14,7 @@ import {
   AddToWatchTvShowsMutationDocument,
   RemoveFromToWatchMoviesMutationDocument,
   RemoveFromToWatchTvShowsMutationDocument,
+  SignUpDocument,
 } from "@/graphql/generated";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import { revalidatePath } from "next/cache";
@@ -358,4 +359,21 @@ export async function handleRemoveFromToWatchTvShows(
 export async function getSession() {
   const session = await getServerSession(authOptions);
   return session;
+}
+
+export async function signUpUser(
+  email: string,
+  username: string,
+  password: string
+) {
+  await client.mutate({
+    mutation: SignUpDocument,
+    variables: {
+      input: {
+        email,
+        username,
+        password,
+      },
+    },
+  });
 }

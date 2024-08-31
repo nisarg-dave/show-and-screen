@@ -26,7 +26,7 @@ function LogInForm({ setSignup }: LogInFormProps) {
           className="cursor-pointer hover:underline text-sm"
           onClick={() => setSignup((prevState) => !prevState)}
         >
-          Sign Up?
+          Need to create an account?
         </span>
       </div>
     </div>
