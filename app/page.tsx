@@ -11,7 +11,7 @@ function Index() {
       if (session) {
         router.push("/home");
       } else {
-        router.push("/signup");
+        router.push("/login");
       }
     };
     checkSession();

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 function page() {
-  const [signup, setSignup] = useState(true);
+  const [signup, setSignup] = useState(false);
   return (
     <div className="text-secondary">
       <div className="flex justify-center mb-2 gap-2">
@@ -16,7 +16,7 @@ function page() {
         </h1>
       </div>
       {signup ? (
-        <SignUpForm setSignup={setSignup} />
+        <SignUpForm setSignup={setSignup} signup={signup} />
       ) : (
         <LogInForm setSignup={setSignup} />
       )}

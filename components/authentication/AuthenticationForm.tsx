@@ -13,14 +13,21 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
+interface AuthenticationFormProps {
+  signup?: boolean;
+}
+
 const formSchema = z.object({
   email: z.string().email(),
+  username: z
+    .string()
+    .min(5, { message: "Username must be at least 5 characters." }),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
 });
 
-function AuthenticationForm() {
+function AuthenticationForm({ signup }: AuthenticationFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,6 +59,25 @@ function AuthenticationForm() {
             </FormItem>
           )}
         />
+        {signup ? (
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input
+                    className="bg-muted-foreground"
+                    placeholder="Username"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ) : null}
         <FormField
           control={form.control}
           name="password"

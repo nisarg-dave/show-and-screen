@@ -27,11 +27,10 @@ export function LogOutButton() {
     <DropdownMenuShortcut className="flex">
       <LogOut className="mr-2 h-4 w-4" />
       <span
-        onClick={() => signOut({ callbackUrl: `http://localhost:3000/signup` })}
+        onClick={() => signOut({ callbackUrl: `http://localhost:3000/login` })}
       >
         Log Out
       </span>
-      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
     </DropdownMenuShortcut>
   );
 }
