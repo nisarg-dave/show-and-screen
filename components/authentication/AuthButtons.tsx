@@ -12,7 +12,7 @@ export function GoogleAuthButton() {
       className="w-full bg-card-foreground hover:bg-purple-800 mt-6"
       onClick={() => {
         signIn("google", {
-          callbackUrl: `http://localhost:3000/home`,
+          callbackUrl: `${process.env.NEXT_PUBLIC_URL}/home`,
         });
       }}
     >
@@ -27,7 +27,9 @@ export function LogOutButton() {
     <DropdownMenuShortcut className="flex">
       <LogOut className="mr-2 h-4 w-4" />
       <span
-        onClick={() => signOut({ callbackUrl: `http://localhost:3000/login` })}
+        onClick={() =>
+          signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_URL}/login` })
+        }
       >
         Log Out
       </span>

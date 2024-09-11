@@ -16,7 +16,7 @@ import { signUpUser } from "@/app/actions";
 import { signIn } from "next-auth/react";
 
 interface AuthenticationFormProps {
-  signup?: boolean;
+  signup: boolean;
 }
 
 const formSchema = z.object({
@@ -34,20 +34,26 @@ function AuthenticationForm({ signup }: AuthenticationFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      username: "",
+      password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(signup);
     if (signup) {
       await signUpUser(values.email, values.username, values.password);
       await signIn("credentials", {
         email: values.email,
         password: values.password,
+        callbackUrl: `${process.env.NEXT_PUBLIC_URL}/home`,
       });
     } else {
+      console.log("calling this");
       await signIn("credentials", {
         email: values.email,
         password: values.password,
+        callbackUrl: `${process.env.NEXT_PUBLIC_URL}/home`,
       });
     }
   };

@@ -13,6 +13,10 @@ import { LogOutButton } from "../authentication/AuthButtons";
 
 async function NavBar() {
   const session = await getSession();
+  const initials = session?.user?.name
+    ?.split(" ")[0]
+    ?.toUpperCase()
+    .slice(0, 2);
   return (
     <header className="bg-primary px-4 h-14 sticky z-30 top-0 text-secondary">
       <div className="flex justify-between pt-3">
@@ -38,7 +42,9 @@ async function NavBar() {
             <DropdownMenuTrigger>
               <Avatar className="h-8 w-8">
                 <AvatarImage src={session?.user?.image!} />
-                <AvatarFallback>{session?.user?.name}</AvatarFallback>
+                <AvatarFallback className="bg-purple-800">
+                  {initials}
+                </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-muted-foreground">

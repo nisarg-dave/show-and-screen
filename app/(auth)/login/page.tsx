@@ -18,7 +18,7 @@ function page() {
       {signup ? (
         <SignUpForm setSignup={setSignup} signup={signup} />
       ) : (
-        <LogInForm setSignup={setSignup} />
+        <LogInForm setSignup={setSignup} signup={signup} />
       )}
     </div>
   );

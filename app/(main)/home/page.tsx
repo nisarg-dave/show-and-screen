@@ -1,6 +1,7 @@
 import MediaCarousel from "@/components/media/MediaCarousel";
 import { checkChanged, getCurrentUser } from "../../actions";
 import RefreshCache from "../../_lib/refresh-cache";
+import { getSession } from "@/app/actions";
 
 async function getTrendingMovies() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
@@ -53,12 +54,13 @@ async function getTopRatedTvShows() {
 }
 
 export default async function Home() {
+  const session = await getSession();
   const trendingMovies = await getTrendingMovies();
   const trendingTvShows = await getTrendingTvShows();
   const nowPlayingMovies = await getNowPlayingMovies();
   const upcomingMovies = await getUpcomingMovies();
   const topRatedTvShows = await getTopRatedTvShows();
-  const currentUser = await getCurrentUser("ndave630@gmail.com");
+  const currentUser = await getCurrentUser(session?.user?.email!);
 
   return (
     <main className="min-h-screen">
