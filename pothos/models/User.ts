@@ -64,6 +64,7 @@ builder.mutationFields((t) => ({
       }),
     },
     resolve: async (query, parent, args) => {
+      // TODO validation to check if email already exists
       const user = await prisma.user.create({
         data: {
           name: args.input.username,

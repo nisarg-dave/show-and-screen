@@ -3,7 +3,7 @@ import AuthenticationForm from "./AuthenticationForm";
 
 interface LogInFormProps {
   setSignup: React.Dispatch<React.SetStateAction<boolean>>;
-  signup: booelan;
+  signup: boolean;
 }
 
 function LogInForm({ setSignup, signup }: LogInFormProps) {

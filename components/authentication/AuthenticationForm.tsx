@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -23,7 +24,8 @@ const formSchema = z.object({
   email: z.string().email(),
   username: z
     .string()
-    .min(5, { message: "Username must be at least 5 characters." }),
+    .min(5, { message: "Username must be at least 5 characters." })
+    .optional(),
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
@@ -34,15 +36,15 @@ function AuthenticationForm({ signup }: AuthenticationFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      username: "",
+      username: "Loged In User", // Probably not the best way to do this but seems to be the way to get around constraint of min 5 characters
       password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(signup);
+    console.log("hello");
     if (signup) {
-      await signUpUser(values.email, values.username, values.password);
+      await signUpUser(values.email, values.username!, values.password);
       await signIn("credentials", {
         email: values.email,
         password: values.password,
@@ -121,6 +123,11 @@ function AuthenticationForm({ signup }: AuthenticationFormProps) {
         >
           Submit
         </Button>
+        <ErrorMessage
+          errors={form.formState.errors}
+          name="username"
+          render={({ message }) => <p>{message}</p>}
+        />
       </form>
     </Form>
   );
