@@ -21,14 +21,14 @@ export const authOptions: NextAuthOptions = {
 
         if (!user) {
           // User not found
-          throw new Error("Invalid email or password");
+          return null;
         }
 
         // Compare hashed password with user's passwordHash
         const isValidPassword = await bcrypt.compare(password, user.password!);
 
         if (!isValidPassword) {
-          throw new Error("Invalid email or password");
+          return null;
         }
 
         // User authenticated successfully, return user object

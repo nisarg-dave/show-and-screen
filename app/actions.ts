@@ -23,6 +23,8 @@ import { authOptions } from "@/lib/auth";
 
 const client = getClient();
 
+// All of these are endpoints that are exposed with an ID and can be found by hackers. Need to authenticate them somehow.
+
 export async function getTopThreeTrendingMovies() {
   const movieRes = await fetch(
     "https://api.themoviedb.org/3/trending/movie/week",
