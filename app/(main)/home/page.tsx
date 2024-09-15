@@ -78,8 +78,8 @@ export default async function Home() {
         ) : (
           <p className="text-secondary p-5">
             You haven't added any movies to your top five yet. Go to the Watched
-            page, add some movies, select your top five, and then come back
-            here.
+            page, search and add some movies, select your top five, and then
+            come back here.
           </p>
         )}
 
@@ -94,8 +94,8 @@ export default async function Home() {
         ) : (
           <p className="text-secondary p-5">
             You haven't added any TV shows to your top five yet. Go to the
-            Watched page, add some TV shows, select your top five, and then come
-            back here.
+            Watched page, search and add some TV shows, select your top five,
+            and then come back here.
           </p>
         )}
         <h2 className="text-secondary font-semibold text-xl">
@@ -109,8 +109,8 @@ export default async function Home() {
         ) : (
           <p className="text-secondary p-5">
             You haven't added any movies to your watched list yet. Either go to
-            the Watched page, add some Movies, and then come back here, or click
-            on the TV icon on the movies below.
+            the Watched page, search and add some Movies, and then come back
+            here, or click on the TV icon on the movies below.
           </p>
         )}
         <h2 className="text-secondary font-semibold text-xl">
@@ -124,8 +124,8 @@ export default async function Home() {
         ) : (
           <p className="text-secondary p-5">
             You haven't added any TV shows to your watched list yet. Either go
-            to the Watched page, add some TV shows, and then come back here, or
-            click on the TV icon on the TV shows below.
+            to the Watched page, search and add some TV shows, and then come
+            back here, or click on the TV icon on the TV shows below.
           </p>
         )}
         <h2 className="text-secondary font-semibold text-xl">
@@ -139,8 +139,8 @@ export default async function Home() {
         ) : (
           <p className="text-secondary p-5">
             You haven't added any movies to your "To Watch" list yet. Either go
-            to the To Watch page, add some movies, and then come back here, or
-            click on the Star icon on the movies below.
+            to the To Watch page, search and add some movies, and then come back
+            here, or click on the Star icon on the movies below.
           </p>
         )}
         <h2 className="text-secondary font-semibold text-xl">
@@ -154,8 +154,8 @@ export default async function Home() {
         ) : (
           <p className="text-secondary p-5">
             You haven't added any TV shows to your "To Watch" list yet. Either
-            go to the To Watch page, add some TV shows, and then come back here,
-            or click on the Star icon on the TV shows below.
+            go to the To Watch page, search and add some TV shows, and then come
+            back here, or click on the Star icon on the TV shows below.
           </p>
         )}
         <h2 className="text-secondary font-semibold text-xl">

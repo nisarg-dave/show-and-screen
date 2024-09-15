@@ -2,13 +2,14 @@ import React from "react";
 import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaCard from "@/components/media/MediaCard";
-
 import { checkChanged, getCurrentUser } from "../../actions";
 import { Suspense } from "react";
 import RefreshCache from "../../_lib/refresh-cache";
+import { getSession } from "@/app/actions";
 
 async function ToWatchPage() {
-  const currentUser = await getCurrentUser("ndave630@gmail.com");
+  const session = await getSession();
+  const currentUser = await getCurrentUser(session?.user?.email!);
 
   return (
     <main className="min-h-screen flex items-center flex-col">
