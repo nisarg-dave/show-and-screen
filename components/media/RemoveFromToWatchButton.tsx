@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import {
+  getSession,
   handleRemoveFromToWatchMovies,
   handleRemoveFromToWatchTvShows,
 } from "@/app/actions";
@@ -20,16 +21,23 @@ function RemoveFromToWatchButton({
 }: RemoveFromToWatchButtonProps) {
   const { toast } = useToast();
 
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const getUserEmail = async () => {
+      const session = await getSession();
+      setUserEmail(session?.user?.email!);
+    };
+    getUserEmail();
+  }, []);
+
   return (
     <Button
       className="w-full bg-muted-foreground text-secondary"
       variant={"outline"}
       onClick={async () => {
         if (isMovie) {
-          const result = await handleRemoveFromToWatchMovies(
-            id,
-            "ndave630@gmail.com"
-          );
+          const result = await handleRemoveFromToWatchMovies(id, userEmail);
           if (result) {
             toast({
               title: "Added To Watched",
@@ -42,10 +50,7 @@ function RemoveFromToWatchButton({
             });
           }
         } else if (isTvShow) {
-          const result = await handleRemoveFromToWatchTvShows(
-            id,
-            "ndave630@gmail.com"
-          );
+          const result = await handleRemoveFromToWatchTvShows(id, userEmail);
           if (result) {
             toast({
               title: "Added To Watched",
