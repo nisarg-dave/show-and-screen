@@ -40,4 +40,23 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google") {
+        const user = await prisma.user.findUnique({
+          where: { email: profile?.email },
+        });
+        if (!user) {
+          await prisma.user.create({
+            data: {
+              name: profile?.name!,
+              email: profile?.email!,
+            },
+          });
+        }
+        return true; // Allow sign-in
+      }
+      return true; // For other providers, allow sign-in as well
+    },
+  },
 };
