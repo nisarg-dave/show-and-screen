@@ -1,0 +1,52 @@
+query UserQuery($user: FindUserInput!) {
+  user(user: $user) {
+    id
+    name
+    email
+    topFiveMovies {
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
+    }
+    topFiveTvShows {
+      tvShow {
+        id
+        title
+        posterPath
+      }
+    }
+    watchedMovies {
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
+    }
+    watchedTvShows {
+      tvShow {
+        id
+        title
+        posterPath
+      }
+    }
+    toWatchMovies {
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
+    }
+    toWatchTvShows {
+      tvShow {
+        id
+        title
+        posterPath
+      }
+    }
+  }
+}

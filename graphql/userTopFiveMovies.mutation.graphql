@@ -1,0 +1,27 @@
+mutation RemoveFromTopFiveMoviesMutation(
+  $user: FindUserInput!
+  $movie: MovieIdInput!
+) {
+  removeFromTopFiveMovies(user: $user, movie: $movie) {
+    movie {
+      id
+      title
+      posterPath
+      backdropPath
+    }
+  }
+}
+
+mutation AddToTopFiveMoviesMutation(
+  $user: FindUserInput!
+  $movie: MovieIdInput!
+) {
+  addToTopFiveMovies(user: $user, movie: $movie) {
+    movie {
+      id
+      title
+      posterPath
+      backdropPath
+    }
+  }
+}

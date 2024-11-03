@@ -1,0 +1,42 @@
+mutation AddToWatchedMoviesMutation(
+  $user: FindUserInput!
+  $movie: MovieInput!
+) {
+  addToWatchedMovies(user: $user, movie: $movie) {
+    id
+    name
+    email
+    topFiveMovies {
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
+    }
+    watchedMovies {
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
+    }
+  }
+}
+
+mutation AddToWatchMoviesMutation($user: FindUserInput!, $movie: MovieInput!) {
+  addToWatchMovies(user: $user, movie: $movie) {
+    id
+    name
+    email
+    toWatchMovies {
+      movie {
+        id
+        title
+        posterPath
+        backdropPath
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String                   @id @default(uuid())
+  name           String
+  password       String?
+  email          String                   @unique
+  topFiveMovies  UserTopFiveMovies[]
+  topFiveTvShows UserTopFiveTvShows[]
+  watchedMovies  UserWatchedMovies[]
+  watchedTvShows UserWatchedTvShows[]
+  toWatchMovies  UserWantToWatchMovies[]
+  toWatchTvShows UserWantToWatchTvShows[]
+}
+
+model Movie {
+  id           String                  @id @default(uuid())
+  title        String
+  posterPath   String
+  backdropPath String
+  topFive      UserTopFiveMovies[]
+  watched      UserWatchedMovies[]
+  wantToWatch  UserWantToWatchMovies[]
+}
+
+// Explicit many to many relationship using relation table (Creating relation tables is a common data modelling practice in SQL to represent relationships between different entities. In essence it means that "one m-n relation is modeled as two 1-n relations in the database")
+model UserTopFiveMovies {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  movieId String
+
+  @@id([userId, movieId])
+}
+
+model UserWatchedMovies {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  movieId String
+
+  @@id([userId, movieId])
+}
+
+model UserWantToWatchMovies {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  movieId String
+
+  @@id([userId, movieId])
+}
+
+model TvShow {
+  id          String                   @id @default(uuid())
+  title       String
+  posterPath  String
+  topFive     UserTopFiveTvShows[]
+  watched     UserWatchedTvShows[]
+  wantToWatch UserWantToWatchTvShows[]
+}
+
+model UserTopFiveTvShows {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId   String
+  tvShow   TvShow @relation(fields: [tvShowId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  tvShowId String
+
+  @@id([userId, tvShowId])
+}
+
+model UserWatchedTvShows {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId   String
+  tvShow   TvShow @relation(fields: [tvShowId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  tvShowId String
+
+  @@id([userId, tvShowId])
+}
+
+model UserWantToWatchTvShows {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  userId   String
+  tvShow   TvShow @relation(fields: [tvShowId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  tvShowId String
+
+  @@id([userId, tvShowId])
+}

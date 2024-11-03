@@ -1,0 +1,42 @@
+mutation AddToWatchedTvShowsMutation(
+  $user: FindUserInput!
+  $tvShow: TvShowInput!
+) {
+  addToWatchedTvShows(user: $user, tvShow: $tvShow) {
+    id
+    name
+    email
+    topFiveTvShows {
+      tvShow {
+        id
+        title
+        posterPath
+      }
+    }
+    watchedTvShows {
+      tvShow {
+        id
+        title
+        posterPath
+      }
+    }
+  }
+}
+
+mutation AddToWatchTvShowsMutation(
+  $user: FindUserInput!
+  $tvShow: TvShowInput!
+) {
+  addToWatchTvShows(user: $user, tvShow: $tvShow) {
+    id
+    name
+    email
+    toWatchTvShows {
+      tvShow {
+        id
+        title
+        posterPath
+      }
+    }
+  }
+}
