@@ -18,6 +18,8 @@ import {
   handleAddToWatchTvShows,
 } from "@/app/actions";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
+import { getSession } from "@/app/actions";
+import { useEffect, useState } from "react";
 
 interface MediaCardProps {
   imgUrl: string;
@@ -47,6 +49,16 @@ function MediaCard({
   tmdbMediaTvShow,
 }: MediaCardProps) {
   const { toast } = useToast();
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const getUserEmail = async () => {
+      const session = await getSession();
+      setUserEmail(session?.user?.email!);
+    };
+    getUserEmail();
+  }, []);
+
   return (
     // The relative positioning on the .Card creates a reference point for absolute positioning of its child elements.
     // The absolute positioning on the inner div creates an overlay effect on top of the .CardContent within the boundaries of the .Card.
@@ -69,7 +81,7 @@ function MediaCard({
                         if (isTmdbMovie) {
                           const result = await handleAddToWatchMovies(
                             tmdbMediaMovie!,
-                            "ndave630@gmail.com"
+                            userEmail
                           );
                           if (result) {
                             toast({
@@ -85,7 +97,7 @@ function MediaCard({
                         } else {
                           const result = await handleAddToWatchTvShows(
                             tmdbMediaTvShow!,
-                            "ndave630@gmail.com"
+                            userEmail
                           );
                           if (result) {
                             toast({
@@ -116,7 +128,7 @@ function MediaCard({
                         if (isTmdbMovie) {
                           const result = await handleAddToWatchedMovies(
                             tmdbMediaMovie!,
-                            "ndave630@gmail.com"
+                            userEmail
                           );
                           if (result) {
                             toast({
@@ -132,7 +144,7 @@ function MediaCard({
                         } else {
                           const result = await handleAddToWatchedTvShows(
                             tmdbMediaTvShow!,
-                            "ndave630@gmail.com"
+                            userEmail
                           );
                           if (result) {
                             toast({

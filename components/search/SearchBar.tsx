@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import DropDown from "./DropDown";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import {
+  getSession,
   handleAddToWatchMovies,
   handleAddToWatchTvShows,
   handleAddToWatchedMovies,
@@ -16,14 +17,23 @@ function SearchBar() {
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const getUserEmail = async () => {
+      const session = await getSession();
+      setUserEmail(session?.user?.email!);
+    };
+    getUserEmail();
+  }, []);
 
   const handleSelectMovie = (movie: TmdbMovie) => {
     setOpen(!open);
     setInput(movie.title);
     if (pathname === "/watched") {
-      handleAddToWatchedMovies(movie, "ndave630@gmail.com");
+      handleAddToWatchedMovies(movie, userEmail);
     } else if (pathname === "/toWatch") {
-      handleAddToWatchMovies(movie, "ndave630@gmail.com");
+      handleAddToWatchMovies(movie, userEmail);
     }
   };
 
@@ -31,9 +41,9 @@ function SearchBar() {
     setOpen(!open);
     setInput(tvShow.name);
     if (pathname === "/watched") {
-      handleAddToWatchedTvShows(tvShow, "ndave630@gmail.com");
+      handleAddToWatchedTvShows(tvShow, userEmail);
     } else if (pathname === "/toWatch") {
-      handleAddToWatchTvShows(tvShow, "ndave630@gmail.com");
+      handleAddToWatchTvShows(tvShow, userEmail);
     }
   };
 

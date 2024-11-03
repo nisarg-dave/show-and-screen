@@ -1,13 +1,14 @@
 import SearchBar from "@/components/search/SearchBar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaCard from "@/components/media/MediaCard";
-
-import RefreshCache from "../_lib/refresh-cache";
-import { checkChanged, getCurrentUser } from "../actions";
+import RefreshCache from "../../_lib/refresh-cache";
+import { checkChanged, getCurrentUser } from "../../actions";
 import { Suspense } from "react";
+import { getSession } from "@/app/actions";
 
 async function WatchedPage() {
-  const currentUser = await getCurrentUser("ndave630@gmail.com");
+  const session = await getSession();
+  const currentUser = await getCurrentUser(session?.user?.email!);
   const topFiveMovieIds = currentUser.topFiveMovies.map(
     (item) => item.movie.id
   );

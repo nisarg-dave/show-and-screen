@@ -14,11 +14,16 @@ import {
   AddToWatchTvShowsMutationDocument,
   RemoveFromToWatchMoviesMutationDocument,
   RemoveFromToWatchTvShowsMutationDocument,
+  SignUpDocument,
 } from "@/graphql/generated";
 import { TmdbMovie, TmdbTvShow } from "@/types/Tmdb";
 import { revalidatePath } from "next/cache";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const client = getClient();
+
+// All of these are endpoints that are exposed with an ID and can be found by hackers. Need to authenticate them somehow.
 
 export async function getTopThreeTrendingMovies() {
   const movieRes = await fetch(
@@ -350,4 +355,26 @@ export async function handleRemoveFromToWatchTvShows(
     console.log(e);
     return false;
   }
+}
+
+export async function getSession() {
+  const session = await getServerSession(authOptions);
+  return session;
+}
+
+export async function signUpUser(
+  email: string,
+  username: string,
+  password: string
+) {
+  await client.mutate({
+    mutation: SignUpDocument,
+    variables: {
+      input: {
+        email,
+        username,
+        password,
+      },
+    },
+  });
 }

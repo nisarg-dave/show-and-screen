@@ -7,6 +7,8 @@ import {
   handleRemoveFromTopFiveMovies,
   handleRemoveFromTopFiveTvShows,
 } from "@/app/actions";
+import { useEffect, useState } from "react";
+import { getSession } from "@/app/actions";
 
 interface TopFiveButtonProps {
   isTopFive?: boolean;
@@ -22,6 +24,15 @@ function TopFiveButton({
   id,
 }: TopFiveButtonProps) {
   const { toast } = useToast();
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const getUserEmail = async () => {
+      const session = await getSession();
+      setUserEmail(session?.user?.email!);
+    };
+    getUserEmail();
+  }, []);
 
   return (
     <>
@@ -30,14 +41,14 @@ function TopFiveButton({
           className="w-full"
           onClick={() => {
             if (isMovie) {
-              handleRemoveFromTopFiveMovies("ndave630@gmail.com", id);
+              handleRemoveFromTopFiveMovies(userEmail, id);
               toast({
                 title: "Removed",
                 description: "Removed From Top Five",
               });
             }
             if (isTvShow) {
-              handleRemoveFromTopFiveTvShows("ndave630@gmail.com", id);
+              handleRemoveFromTopFiveTvShows(userEmail, id);
               toast({
                 title: "Removed",
                 description: "Removed From Top Five",
@@ -53,10 +64,7 @@ function TopFiveButton({
           variant={"outline"}
           onClick={async () => {
             if (isMovie) {
-              const result = await handleAddToTopFiveMovies(
-                "ndave630@gmail.com",
-                id
-              );
+              const result = await handleAddToTopFiveMovies(userEmail, id);
               if (result) {
                 toast({
                   title: "Added",
@@ -70,10 +78,7 @@ function TopFiveButton({
               }
             }
             if (isTvShow) {
-              const result = await handleAddToTopFiveTvShows(
-                "ndave630@gmail.com",
-                id
-              );
+              const result = await handleAddToTopFiveTvShows(userEmail, id);
               if (result) {
                 toast({
                   title: "Added",
